@@ -8,6 +8,6 @@
 </head>
 <body>
     <h1>POZDRAVLJENI!</h1>
-    <div>Za nadaljevanje se morate prijaviti <a href="prijava.php">PRIJAVA</a></div>
+    <div>Za nadaljevanje se morate prijaviti YAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY<a href="prijava.php">PRIJAVA</a></div>
 </body>
 </html>
