@@ -23,7 +23,7 @@ if ($st > 0) {
         header("Location: https://predracun.nikola-marinkovic.eu/admin.php");
         exit();
     }else{
-        header("Location: https://predracun.nikola-marinkovic.eu/blagajna.php")
+        header("Location: https://predracun.nikola-marinkovic.eu/blagajna.php");
         exit();
     }
 } else {
@@ -33,5 +33,4 @@ if ($st > 0) {
 }
 
 
-ob_end_flush();
 ?>
