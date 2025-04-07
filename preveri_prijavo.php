@@ -3,6 +3,8 @@ require_once 'baza.php';
 session_start();
 ob_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 $e = $_POST['user'];
 $g = $_POST['pas'];
 $gkod = sha1($g);
@@ -29,8 +31,7 @@ if ($st > 0) {
     header("Refresh:5; url=index.php");
     exit();
 }
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
+
 
 ob_end_flush();
 ?>
