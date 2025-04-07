@@ -17,8 +17,13 @@ if ($st > 0) {
     $_SESSION['priimek'] = $row['priimek'];
     $_SESSION['uporabnik_id'] = $row['id'];
     $_SESSION['role'] = $row['role'];
+    if($_SESSION['role'] == 'a'){
         header("Location: https://predracun.nikola-marinkovic.eu/admin.php");
         exit();
+    }else{
+        header("Location: https://predracun.nikola-marinkovic.eu/blagajna.php")
+        exit();
+    }
 } else {
     echo "Uporabniško ime ali geslo ni pravilno.";
     header("Refresh:5; url=index.php");

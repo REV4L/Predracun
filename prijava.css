@@ -1,0 +1,109 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+html {
+    background-color: ghostwhite;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.form-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.form-container h2 {
+    color: white;
+    text-align: center;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-container input:focus {
+    background-color: rgb(169, 255, 166);
+    outline-style: double;
+}
+
+#submit {
+    width: 48%;
+    padding: 10px;
+    margin: 5px 1%;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(44, 152, 1);
+    color: white;
+    cursor: pointer;
+}
+
+#submit:hover {
+    background-color: rgba(36, 126, 1, 0.859);
+}
+
+#center {
+    display: flex;
+    justify-content: center;
+}
+
+span {
+    font-size: 12px;
+}
+
+#link {
+    text-align: center;
+    margin-top: 20px;
+    color: #f2f2f2;
+    text-decoration: italic;
+    font-size: 12px;
+}
+
+#link:hover {
+    color: #ffffff;
+    background-color: red;
+}
+
+h1,
+h2 {
+    color: white;
+    text-align: center;
+    margin: 0;
+    /* Remove default margin */
+}
+
+footer {
+    background-color: #333;
+    /* Barva ozadja noge */
+    color: white;
+    /* Barva besedila noge */
+    text-align: center;
+    /* Besedilo poravnano na sredino */
+    padding: 10px;
+    /* Notranje robove */
+    position: fixed;
+    /* Fiksna pozicija na dnu strani */
+    bottom: 0;
+    /* Položaj na dnu */
+    width: 100%;
+    /* Širina noge */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+    /* Senčenje */
+}

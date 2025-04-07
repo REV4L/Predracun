@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="prijava.css">
 </head>
 <body>
-    <div class="form-container">
+    <div class="c">
         <form action="preveri_prijavo.php" method="post">
             
             <span>Vnesite e-naslov: </span><input type="text" name="user" /><br>
@@ -17,5 +17,9 @@
             <a href="index.php"id="link">Nazaj na uvodno stran</a><br>
         </form>
     </div>
+    <footer>
+        <p>&#169; Valentin Ozimic and Nikola Marinković</p>
+        <p>nikola.marinkovic@scv.si</p>
+</footer>
 </body>
 </html>
