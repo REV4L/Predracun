@@ -78,7 +78,7 @@ mysqli_close($link);
         <span><label for="email">E-mail;</label></span>
         <input type="text" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
         <br>
-        <button><a href="zamenjaj_geslo.php">Zamenjaj geslo</button>
+        <input type="button" href="zamenjaj_geslo.php">Zamenjaj geslo</button>
         <div id="center">
         <input type="submit" value="Posodobi" id="submit">
         </div>
