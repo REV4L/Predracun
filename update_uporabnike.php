@@ -28,7 +28,7 @@ $row = $result->fetch_assoc();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ime = $_POST['ime'];
     $priimek = $_POST['priimek'];
-    $telefonska = $_POST['telefonska'];
+    $telefonska = $_POST['telefon'];
     $email = $_POST['email'];
     $pasw = $_POST['pasw'];
 
@@ -72,14 +72,14 @@ mysqli_close($link);
         <span><label for="priimek">Priimek:</label></span>
         <input type="text" name="priimek" value="<?php echo htmlspecialchars($row['priimek']); ?>" required>
         <br>
-        <span><label for="telefonska">Telefonska:</label></span>
-        <input type="text" name="telefonska" value="<?php echo htmlspecialchars($row['telefonska']); ?>" required>
+        <span><label for="telefon">Telefonska:</label></span>
+        <input type="text" name="telefon" value="<?php echo htmlspecialchars($row['telefons']); ?>" required>
         <br>
-        <span><label for="username">Uporabniško ime:</label></span>
-        <input type="text" name="username" value="<?php echo htmlspecialchars($row['username']); ?>" required>
+        <span><label for="email">E-mail;</label></span>
+        <input type="text" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
         <br>
-        <span><label for="pass">Geslo:</label></span>
-        <input type="text" name="pass" value="<?php echo htmlspecialchars($row['pass']); ?>" required>
+        <span><label for="pasw">Geslo:</label></span>
+        <input type="text" name="pasw" value="<?php echo htmlspecialchars($row['pasw']); ?>" required>
         <br>
         <div id="center">
         <input type="submit" value="Posodobi" id="submit">
