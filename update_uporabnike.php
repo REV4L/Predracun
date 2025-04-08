@@ -73,7 +73,7 @@ mysqli_close($link);
         <input type="text" name="priimek" value="<?php echo htmlspecialchars($row['priimek']); ?>" required>
         <br>
         <span><label for="telefon">Telefonska:</label></span>
-        <input type="text" name="telefon" value="<?php echo htmlspecialchars($row['telefons']); ?>" required>
+        <input type="text" name="telefon" value="<?php echo htmlspecialchars($row['telefon']); ?>" required>
         <br>
         <span><label for="email">E-mail;</label></span>
         <input type="text" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
