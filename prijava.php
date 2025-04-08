@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Prijava</title>
     <link rel="stylesheet" href="prijava.css">
 </head>
 <body>
-    <div class="c">
+    <div class="form-container">
         <form action="preveri_prijavo.php" method="post">
-            
-            <span>Vnesite e-naslov: </span><input type="text" name="user" /><br>
-            <span>Vnesite geslo: </span><input type="password" name="pas" /><br>
+            <h2>Prijava</h2>
+            <span>Vnesite e-naslov: </span>
+            <input type="text" name="user" required /><br>
+            <span>Vnesite geslo: </span>
+            <input type="password" name="pas" required /><br>
 
             <div id="center"><input type="submit" value="Prijava" id="submit"/></div>
-            <a href="index.php"id="link">Nazaj na uvodno stran</a><br>
+            <div id="center">
+                <a href="index.php" id="link">Nazaj na uvodno stran</a>
+            </div>
         </form>
     </div>
+
     <footer>
-        <p>&#169; Valentin Ozimic and Nikola Marinković</p>
+        <p>&#169; Valentin Ozimic in Nikola Marinković</p>
         <p>nikola.marinkovic@scv.si</p>
-</footer>
+    </footer>
 </body>
 </html>
