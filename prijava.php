@@ -23,8 +23,7 @@
     </div>
 
     <footer>
-        <p>&#169; Valentin Ozimic in Nikola Marinković</p>
-        <p>nikola.marinkovic@scv.si</p>
+        <p>&#169; Valentin Ozimic in Nikola Marinković 2025</p>
     </footer>
 </body>
 </html>
