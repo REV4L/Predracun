@@ -30,7 +30,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
         echo "<td>" . htmlspecialchars($row['id']) . "</td>";
         echo "<td>" . htmlspecialchars($row['ime']) . "</td>";
         echo "<td>" . htmlspecialchars($row['priimek']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['tel']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['telefon']) . "</td>";
         echo "<td>" . htmlspecialchars($row['email']) . "</td>";
         echo "<td>" . htmlspecialchars($row['pasw']) . "</td>";
         if ($row['role'] != 'a') {
