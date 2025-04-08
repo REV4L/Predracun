@@ -31,6 +31,4 @@ if ($st > 0) {
     header("Refresh:5; url=index.php");
     exit();
 }
-
-
 ?>
