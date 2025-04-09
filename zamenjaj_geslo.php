@@ -77,7 +77,7 @@ mysqli_close($link);
         <div class="obvestilo success">Geslo uspešno posodobljeno.</div>
         <script>
             setTimeout(function() {
-                window.location.href = "uredi_uporabnika.php?id=<?php echo $id; ?>";
+                window.location.href = "izpis_uporanikov.php?id=<?php echo $id; ?>";
             }, 3000);
         </script>
     <?php endif; ?>
@@ -95,7 +95,7 @@ mysqli_close($link);
         </div>
     </form>
     <br>
-    <a href='uredi_uporabnika.php?id=<?php echo $id; ?>' id="link">Nazaj</a>
+    <a href='izpis_uporabnikov.php?id=<?php echo $id; ?>' id="link">Nazaj</a>
 </div>
 </body>
 </html>
