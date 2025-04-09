@@ -58,7 +58,6 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row['id']) . "</td>";
             echo "<td>" . htmlspecialchars($row['ime']) . "</td>";
             echo "<td>" . htmlspecialchars($row['cena']) . "</td>";
             echo "<td>" . htmlspecialchars($row['kolicina']) . "</td>";
