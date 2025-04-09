@@ -18,7 +18,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'a') {
 </head>
 <body>
 <div class="topnav">
-  <a href='natakar.php'>BLAGAJNA</a>
+  <a href='blagajna.php'>BLAGAJNA</a>
   <a href="odjava.php">ODJAVA</a>
 </div>  
 <div class="container">
@@ -29,7 +29,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'a') {
     <li><a href='registracija.php'>Registracija novega uporabnika</a></li>
     <li><a href='izpis_uporabnikov.php'>Pregled zaposlenih</a></li>
     <li><a href='pregled_artiklov.php'>Pregled artiklov</a></li>
-    <li><a href='dod_artikle.php'>Dodajanje artiklov</a></li>
+    <li><a href='dodaj_artikle.php'>Dodajanje artiklov</a></li>
     <li><a href='pregled_predracunov.php'>Pregled predračunov</a></li>
 </ul>
 </div>
