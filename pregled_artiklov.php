@@ -2,7 +2,7 @@
 require_once 'baza.php';
 session_start();
 
-if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'a') {
     header("Location: prijava.php");
     exit();
 }
