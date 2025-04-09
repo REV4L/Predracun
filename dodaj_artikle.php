@@ -20,10 +20,11 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'a') {
         <form action="add_artikle.php" method="post">
             <span>Ime: </span><input type="text" name="ime" placeholder="Ime" required> <br>
             <span>Cena: </span><input type="text" name="cena" placeholder="Cena" required> <br>
+            <span>Količina: </span><input type="number" name="kolicina" placeholder="Količina" required min="1" step="1"> <br>
 
             <span>Kategorija: </span>
             <?php
-            $query = "SELECT id, ime FROM kategorije";
+            $query = "SELECT id, ime FROM kategorije"; // Pridobivanje kategorij iz tabele 'kategorije'
             $result = mysqli_query($link, $query);
 
             if (!$result) {
