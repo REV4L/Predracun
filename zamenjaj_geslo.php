@@ -13,21 +13,15 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-$query = "SELECT * FROM uporabniki WHERE id = ?";
-$stmt = $link->prepare($query);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows == 0) {
-    die("Uporabnik ne obstaja.");
-}
+// Za prikaz obvestil
+$uspesno = false;
+$napaka = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $novo_geslo = $_POST['novo_geslo'];
 
     if (empty($novo_geslo)) {
-        echo "Polje za geslo ne sme biti prazno.";
+        $napaka = "Polje za geslo ne sme biti prazno.";
     } else {
         $hashed = sha1($novo_geslo);
 
@@ -36,10 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("si", $hashed, $id);
 
         if ($stmt->execute()) {
-            echo "Geslo uspešno posodobljeno.";
-            header("refresh: 3; URL=uredi_uporabnika.php?id=" . $id);
+            $uspesno = true;
         } else {
-            echo "Napaka pri posodabljanju gesla: " . mysqli_error($link);
+            $napaka = "Napaka pri posodabljanju gesla: " . mysqli_error($link);
         }
 
         $stmt->close();
@@ -54,9 +47,45 @@ mysqli_close($link);
     <meta charset="UTF-8">
     <title>Zamenjava gesla</title>
     <link rel="stylesheet" href="prijava.css">
+    <style>
+        .obvestilo {
+            text-align: center;
+            margin: 20px auto;
+            padding: 15px 20px;
+            width: fit-content;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
 </head>
 <body>
 <div class="form-container">
+    <?php if ($uspesno): ?>
+        <div class="obvestilo success">Geslo uspešno posodobljeno.</div>
+        <script>
+            setTimeout(function() {
+                window.location.href = "uredi_uporabnika.php?id=<?php echo $id; ?>";
+            }, 3000);
+        </script>
+    <?php endif; ?>
+
+    <?php if (!empty($napaka)): ?>
+        <div class="obvestilo error"><?php echo $napaka; ?></div>
+    <?php endif; ?>
+
     <h1>Zamenjava gesla</h1>
     <form method="post" action="">
         <label for="novo_geslo">Novo geslo:</label>
