@@ -30,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $priimek = $_POST['priimek'];
     $telefonska = $_POST['telefon'];
     $email = $_POST['email'];
-    $pasw = $_POST['pasw'];
 
     if (empty($ime) || empty($priimek) || empty($telefonska) || empty($email)) {
         die("Vsa polja morajo biti izpolnjena.");
@@ -38,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $query = "UPDATE uporabniki SET ime = ?, priimek = ?, telefon = ?, email = ? WHERE id = ?";
     $stmt = $link->prepare($query);
-    $stmt->bind_param("sssssi", $ime, $priimek, $telefonska, $email, $id);
+    $stmt->bind_param("ssssi", $ime, $priimek, $telefonska, $email, $id);
 
     if ($stmt->execute()) {
         echo "Uporabnik uspešno posodobljen.";
@@ -72,7 +71,7 @@ mysqli_close($link);
         <span><label for="telefon">Telefonska:</label></span>
         <input type="text" name="telefon" value="<?php echo htmlspecialchars($row['telefon']); ?>" required>
         <br>
-        <span><label for="email">E-mail;</label></span>
+        <span><label for="email">E-mail:</label></span>
         <input type="text" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
         <br>
         <a href='zamenjaj_geslo.php?id=<?php echo $id; ?>' id="link">Zamenjaj geslo</a>
