@@ -21,6 +21,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'a') {
             <span>Ime: </span><input type="text" name="ime" placeholder="Ime" required> <br>
             <span>Cena: </span><input type="text" name="cena" placeholder="Cena" required> <br>
             <span>Količina: </span><input type="number" name="kolicina" placeholder="Količina" required min="1" step="1"> <br>
+            <span>Opis: </span><textarea name="opis" placeholder="Opis (neobvezno)" rows="4" cols="50"></textarea> <br>
 
             <span>Kategorija: </span>
             <?php
