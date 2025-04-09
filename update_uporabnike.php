@@ -40,10 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssssi", $ime, $priimek, $telefonska, $email, $id);
 
     if ($stmt->execute()) {
-        echo "Uporabnik uspešno posodobljen.";
+        echo "<h1>Uporabnik uspešno posodobljen.</h1>";
         header("refresh: 3; URL=izpis_uporabnikov.php");
     } else {
-        echo "Napaka pri posodabljanju uporabnika: " . mysqli_error($link);
+        echo "<h1>Napaka pri posodabljanju uporabnika. </h1>" . mysqli_error($link);
     }
 
     $stmt->close();
