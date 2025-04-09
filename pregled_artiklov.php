@@ -14,13 +14,14 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 <head>
     <meta charset="UTF-8">
     <title>Izpis artiklov</title>
-    <link rel="stylesheet" href=".css">
+    <link rel="stylesheet" href="izpis.css"> <!-- Make sure the file name is correct -->
 </head>
 <body>
     <h1>Izpis artiklov</h1>
     <form method="post" action="">
         Kategorija:
         <?php
+        // Query to get categories
         $query = "SELECT id, ime FROM kategorije";
         $result = mysqli_query($link, $query);
 
@@ -43,9 +44,9 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     if (isset($_POST['submit'])) {
         $kategorija_id = $_POST['kategorija_id'];
 
-        $query = "SELECT a.id, a.ime, a.cena, a.kategorija_id, k.ime AS kategorija_ime 
+        $query = "SELECT a.id, a.ime, a.cena, a.kolicina, a.kategorija_id, k.ime AS kategorija_ime 
                   FROM artikli a
-                  JOIN kategorija k ON p.kategorija_id = k.id
+                  JOIN kategorije k ON a.kategorija_id = k.id
                   WHERE a.kategorija_id = ?";
         $stmt = $link->prepare($query);
         $stmt->bind_param("i", $kategorija_id);
@@ -53,13 +54,14 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
         $result = $stmt->get_result();
 
         echo '<table border="1" style="border-collapse: collapse">';
-        echo '<tr><th>ID</th><th>Ime</th><th>Cena</th><th>Kategorija</th><th>Akcija</th></tr>';
+        echo '<tr><th>ID</th><th>Ime</th><th>Cena</th><th>Količina</th><th>Kategorija</th><th>Akcija</th></tr>';
 
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['id']) . "</td>";
             echo "<td>" . htmlspecialchars($row['ime']) . "</td>";
             echo "<td>" . htmlspecialchars($row['cena']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['kolicina']) . "</td>";
             echo "<td>" . htmlspecialchars($row['kategorija_ime']) . "</td>";
             echo "<td>
                     <form action='delete_artikli.php' method='POST' style='display:inline;'>
