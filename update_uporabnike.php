@@ -40,13 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssssi", $ime, $priimek, $telefonska, $email, $id);
 
     if ($stmt->execute()) {
-        echo "<h1>Uporabnik uspešno posodobljen.</h1>";
-        header("refresh: 3; URL=izpis_uporabnikov.php");
+        $uspesno = true;
     } else {
-        echo "<h1>Napaka pri posodabljanju uporabnika. </h1>" . mysqli_error($link);
-    }
+        $napaka = "Napaka pri posodabljanju uporabnika: " . mysqli_error($link);
+    }    
 
     $stmt->close();
+    $uspesno = false;
+    $napaka = '';
 }
 
 mysqli_close($link);
@@ -60,6 +61,18 @@ mysqli_close($link);
 </head>
 <body>
     <div class="form-container">
+    <?php if ($uspesno): ?>
+    <div class="obvestilo success">Uporabnik uspešno posodobljen.</div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "izpis_uporabnikov.php";
+        }, 3000);
+    </script>
+<?php endif; ?>
+
+<?php if (!empty($napaka)): ?>
+    <div class="obvestilo error"><?php echo $napaka; ?></div>
+<?php endif; ?>
     <h1>Posodobitev uporabnika</h1>
     <form action="#" method="post">
         <span><label for="ime">Ime:</label></span>
