@@ -54,7 +54,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
         $result = $stmt->get_result();
 
         echo '<table border="1" style="border-collapse: collapse">';
-        echo '<tr><th>ID</th><th>Ime</th><th>Cena</th><th>Količina</th><th>Kategorija</th><th>Akcija</th></tr>';
+        echo '<tr><th>Ime</th><th>Cena</th><th>Količina</th><th>Kategorija</th><th>Akcija</th></tr>';
 
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
