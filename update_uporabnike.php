@@ -32,16 +32,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $pasw = $_POST['pasw'];
 
-    if (empty($ime) || empty($priimek) || empty($telefonska) || empty($email) || empty($pasw)) {
+    if (empty($ime) || empty($priimek) || empty($telefonska) || empty($email)) {
         die("Vsa polja morajo biti izpolnjena.");
     }
 
-    // Encrypt the password with SHA1
-    $hashed_pass = sha1($pasw);
-
-    $query = "UPDATE uporabniki SET ime = ?, priimek = ?, telefon = ?, email = ?, pasw = ? WHERE id = ?";
+    $query = "UPDATE uporabniki SET ime = ?, priimek = ?, telefon = ?, email = ? WHERE id = ?";
     $stmt = $link->prepare($query);
-    $stmt->bind_param("sssssi", $ime, $priimek, $telefonska, $email, $hashed_pass, $id);
+    $stmt->bind_param("sssssi", $ime, $priimek, $telefonska, $email, $id);
 
     if ($stmt->execute()) {
         echo "Uporabnik uspešno posodobljen.";
@@ -78,7 +75,7 @@ mysqli_close($link);
         <span><label for="email">E-mail;</label></span>
         <input type="text" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
         <br>
-        <a href='zamenjaj_geslo.php' id="link">Zamenjaj geslo</a>
+        <a href='zamenjaj_geslo.php?id=<?php echo $id; ?>' id="link">Zamenjaj geslo</a>
         <div id="center">
         <input type="submit" value="Posodobi" id="submit">
         </div>
