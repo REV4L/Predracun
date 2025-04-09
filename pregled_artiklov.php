@@ -21,7 +21,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     <form method="post" action="">
         Kategorija:
         <?php
-        $query = "SELECT id, ime FROM kategorija";
+        $query = "SELECT id, ime FROM kategorije";
         $result = mysqli_query($link, $query);
 
         if (!$result) {
