@@ -77,37 +77,42 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 
     $query .= " ORDER BY p.datum DESC";
 
-    $stmt = $link->prepare($query);
-    if (!empty($params)) {
-        $stmt->bind_param($types, ...$params);
+    // Preverimo, če so parametri nastavljeni in jih povežemo
+    if ($stmt = $link->prepare($query)) {
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        echo '<table border="1" style="border-collapse: collapse">';
+        echo '<tr>
+                <th>Št.</th>
+                <th>Datum</th>
+                <th>Izdan</th>
+                <th>Skupna cena</th>
+                <th>Končna cena</th>
+                <th>Uporabnik</th>
+              </tr>';
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $izdan = $row['izdan'] ? 'Da' : 'Ne';
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['datum']) . "</td>";
+            echo "<td>" . $izdan . "</td>";
+            echo "<td>" . htmlspecialchars($row['skupna_cena']) . " €</td>";
+            echo "<td>" . htmlspecialchars($row['koncna_cena']) . " €</td>";
+            echo "<td>" . htmlspecialchars($row['ime']) . " " . htmlspecialchars($row['priimek']) . "</td>";
+            echo "</tr>";
+        }
+
+        echo '</table>';
+        $stmt->close();
+    } else {
+        echo "Napaka pri pripravi poizvedbe.";
     }
-    $stmt->execute();
-    $result = $stmt->get_result();
 
-    echo '<table border="1" style="border-collapse: collapse">';
-    echo '<tr>
-            <th>Št.</th>
-            <th>Datum</th>
-            <th>Izdan</th>
-            <th>Skupna cena</th>
-            <th>Končna cena</th>
-            <th>Uporabnik</th>
-          </tr>';
-
-    while ($row = mysqli_fetch_assoc($result)) {
-        $izdan = $row['izdan'] ? 'Da' : 'Ne';
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['datum']) . "</td>";
-        echo "<td>" . $izdan . "</td>";
-        echo "<td>" . htmlspecialchars($row['skupna_cena']) . " €</td>";
-        echo "<td>" . htmlspecialchars($row['koncna_cena']) . " €</td>";
-        echo "<td>" . htmlspecialchars($row['ime']) . " " . htmlspecialchars($row['priimek']) . "</td>";
-        echo "</tr>";
-    }
-
-    echo '</table>';
-    $stmt->close();
     mysqli_close($link);
     ?>
 
