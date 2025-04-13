@@ -19,7 +19,6 @@ $query = "SELECT p.st, p.dt, a.ime, a.cena, r.kolicina
           INNER JOIN artikel_predracun r ON p.id = r.predracun_id
           INNER JOIN artikli a ON a.id = r.artikel_id
           WHERE p.id = ?";
-
 $stmt = $link->prepare($query);
 if (!$stmt) {
     die("Napaka pri pripravi poizvedbe: " . $link->error);
@@ -34,11 +33,19 @@ if ($result->num_rows === 0) {
     die("Ni artiklov za ta račun.");
 }
 
+// Pridobivanje popusta iz baze
+$queryPopust = "SELECT koncna_cena FROM predracun WHERE id = ?";
+$stmtPopust = $link->prepare($queryPopust);
+$stmtPopust->bind_param("i", $racunId);
+$stmtPopust->execute();
+$stmtPopust->bind_result($koncnaCena);
+$stmtPopust->fetch();
+$stmtPopust->close();
+
 require_once __DIR__ . '/fpdf/font/makefont/makefont.php';
-// Pisava mora biti že dodana v fpdf/font kot DejaVuSans.php + .z
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->AddFont('DejaVu', '', 'fonts/DejaVuSans.php');
+$pdf->AddFont('DejaVu','','DejaVuSans.php');
 $pdf->SetFont('DejaVu','',12);
 
 $pdf->Cell(0, 10, $firma, 0, 1);
@@ -48,7 +55,6 @@ $pdf->Cell(0, 10, "Prodajalec: " . $ime . " " . $priimek, 0, 1);
 $datum = '';
 $skupnaCena = 0;
 
-// Tabela glava
 $pdf->Ln(5);
 $pdf->SetFont('DejaVu', 'B', 12);
 $pdf->Cell(80, 10, "Artikel", 1);
@@ -84,6 +90,7 @@ $pdf->Ln(10);
 
 $pdf->SetFont('DejaVu', '', 12);
 $pdf->Cell(0, 10, "Datum: " . $datum, 0, 1);
+$pdf->Cell(0, 10, "Končna cena: " . number_format($koncnaCena, 2) . "€", 0, 1);
 
 ob_end_clean();
 $pdf->Output("D", "racun_" . $racunId . ".pdf");

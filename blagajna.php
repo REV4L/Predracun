@@ -86,13 +86,13 @@ if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
 <body>
 <div class="container">
     <div class="left-panel">
-        <div class="predracun">
-            <h3>Izpis predračuna</h3>
-            <table>
-                <thead>
+        <!-- Obstoječa koda za izpis predračuna -->
+        <h3>Izpis predračuna</h3>
+        <table>
+            <thead>
                 <tr><th>Artikel</th><th>Količina</th><th>Cena</th><th>Skupaj</th><th>Akcija</th></tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 <?php
                 $skupnaCena = 0;
                 if (isset($_SESSION['racunId'])) {
@@ -130,10 +130,39 @@ if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
                     $stmt->close();
                 }
                 ?>
-                </tbody>
-            </table>
-            <h4>Skupni znesek: <span id="skupni-znesek"><?php echo number_format($skupnaCena, 2); ?></span> €</h4>
-        </div>
+            </tbody>
+        </table>
+
+        <h4>Skupni znesek: <span id="skupni-znesek"><?php echo number_format($skupnaCena, 2); ?></span> €</h4>
+
+        <!-- Obrazec za popust -->
+        <form method="POST" class="popust-form">
+            <label for="popust">Vnesite popust (%):</label>
+            <input type="number" name="popust" id="popust" min="0" max="100" step="0.01">
+            <button type="submit" name="uporabi_popust" class="btn akcija">Uporabi popust</button>
+        </form>
+        
+        <?php
+        // Preveri, ali je bil popust uporabljen
+        if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
+            $popust = floatval($_POST['popust']);
+            if ($popust > 0 && $popust <= 100) {
+                $novaCena = $skupnaCena - ($skupnaCena * $popust / 100);
+                echo "<h4>Popust: {$popust}%</h4>";
+                echo "<h4>Nova cena po popustu: " . number_format($novaCena, 2) . " €</h4>";
+
+                // Posodobi ceno v bazi
+                $racunId = $_SESSION['racunId'];
+                $stmt = $link->prepare("UPDATE predracun SET koncna_cena = ? WHERE id = ?");
+                $stmt->bind_param("di", $novaCena, $racunId);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+        ?>
+    </div>
+</div>
+
 
         <div class="kategorije">
             <h3>Kategorije</h3>
