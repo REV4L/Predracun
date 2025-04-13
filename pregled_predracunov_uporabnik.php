@@ -87,6 +87,6 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     ?>
 
     <br>
-    <a href='uporabnik.php'>Nazaj</a>
+    <a href='blagajna.php'>Nazaj</a>
 </body>
 </html>
