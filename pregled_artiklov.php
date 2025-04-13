@@ -43,7 +43,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     if (isset($_POST['submit'])) {
         $kategorija_id = $_POST['kategorija_id'];
 
-        $query = "SELECT a.id, a.ime, a.cena, a.kolicina, a.kategorija_id, k.ime AS kategorija_ime 
+        $query = "SELECT a.id, a.ime, a.cena, a.kolicina, a.opis, a.kategorija_id, k.ime AS kategorija_ime 
                   FROM artikli a
                   JOIN kategorije k ON a.kategorija_id = k.id
                   WHERE a.kategorija_id = ?";
@@ -53,13 +53,14 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
         $result = $stmt->get_result();
 
         echo '<table border="1" style="border-collapse: collapse">';
-        echo '<tr><th>Ime</th><th>Cena</th><th>Količina</th><th>Kategorija</th><th>Akcija</th></tr>';
+        echo '<tr><th>Ime</th><th>Cena</th><th>Količina</th><th>Opis</th><th>Kategorija</th><th>Akcija</th></tr>';
 
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['ime']) . "</td>";
             echo "<td>" . htmlspecialchars($row['cena']) . "</td>";
             echo "<td>" . htmlspecialchars($row['kolicina']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['opis']) . "</td>";
             echo "<td>" . htmlspecialchars($row['kategorija_ime']) . "</td>";
             echo "<td>
                     <form action='delete_artikli.php' method='POST' style='display:inline;'>
