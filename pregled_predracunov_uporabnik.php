@@ -32,8 +32,11 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 
     <?php
     $query = "SELECT p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena
-              FROM predracun p
-              WHERE p.uporabnik_id = ?";
+    FROM predracun p
+    WHERE p.uporabnik_id = (
+        SELECT id FROM uporabniki WHERE ime = ? AND priimek = ?
+    )";
+
 
     $params = [$_SESSION['id']];
     $types = "i";
