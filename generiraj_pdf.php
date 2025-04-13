@@ -38,7 +38,7 @@ require_once __DIR__ . '/fpdf/font/makefont/makefont.php';
 // Pisava mora biti že dodana v fpdf/font kot DejaVuSans.php + .z
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->AddFont('DejaVu','','DejaVuSans.php');
+$pdf->AddFont('DejaVu', '', 'fonts/DejaVuSans.php');
 $pdf->SetFont('DejaVu','',12);
 
 $pdf->Cell(0, 10, $firma, 0, 1);
