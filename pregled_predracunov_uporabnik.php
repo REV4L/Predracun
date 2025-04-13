@@ -2,13 +2,13 @@
 require_once 'baza.php';
 session_start();
 
-// Dovoli samo prijavljenim uporabnikom (ni admin preverjanja)
-if (!isset($_SESSION['ime'])) {
+// Dovoli samo prijavljenim uporabnikom
+if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
     header("Location: prijava.php");
     exit();
 }
 
-echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
+echo "Prijavljeni ste kot " . htmlspecialchars($_SESSION['ime']) . " " . htmlspecialchars($_SESSION['priimek']);
 ?>
 <!DOCTYPE html>
 <html lang="sl">
@@ -31,16 +31,17 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     </form>
 
     <?php
+    // Osnovna poizvedba
     $query = "SELECT p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena
-    FROM predracun p
-    WHERE p.uporabnik_id = (
-        SELECT id FROM uporabniki WHERE ime = ? AND priimek = ?
-    )";
+              FROM predracun p
+              WHERE p.uporabnik_id = (
+                  SELECT id FROM uporabniki WHERE ime = ? AND priimek = ?
+              )";
 
+    $params = [$_SESSION['ime'], $_SESSION['priimek']];
+    $types = "ss";
 
-    $params = [$_SESSION['id']];
-    $types = "i";
-
+    // Datum filtriranje
     if (!empty($_POST['datum_od'])) {
         $query .= " AND p.dt >= ?";
         $params[] = $_POST['datum_od'];
@@ -55,11 +56,21 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 
     $query .= " ORDER BY p.dt DESC";
 
+    // Priprava in izvedba
     if ($stmt = $link->prepare($query)) {
-        $stmt->bind_param($types, ...$params);
+        // Dinamičen bind_param
+        $bind_names[] = $types;
+        for ($i = 0; $i < count($params); $i++) {
+            $bind_name = 'bind' . $i;
+            $$bind_name = $params[$i];
+            $bind_names[] = &$$bind_name;
+        }
+        call_user_func_array([$stmt, 'bind_param'], $bind_names);
+
         $stmt->execute();
         $result = $stmt->get_result();
 
+        // Tabela rezultatov
         echo '<table border="1" style="border-collapse: collapse">';
         echo '<tr>
                 <th>Št.</th>
@@ -83,7 +94,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
         echo '</table>';
         $stmt->close();
     } else {
-        echo "Napaka pri pripravi poizvedbe.";
+        echo "Napaka pri pripravi poizvedbe: " . $link->error;
     }
 
     mysqli_close($link);
