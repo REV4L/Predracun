@@ -32,9 +32,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'a') {
             <a href="pregled_predracunov.php"><i class="fas fa-file-invoice"></i> Predračuni</a>
             <a href="odjava.php" class="logout"><i class="fas fa-sign-out-alt"></i> Odjava</a>
         </div>
-        <div class="toggle-theme">
-            <button onclick="toggleTheme()">🌓 Zamenjaj temo</button>
-        </div>
     </div>
 </body>
 </html>
