@@ -2,7 +2,6 @@
 require_once 'baza.php';
 session_start();
 
-// Preveri, če je uporabnik prijavljen
 if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
     header("Location: prijava.php");
     exit();
@@ -18,7 +17,6 @@ if ($isAdmin) {
 }
 echo "</div>";
 
-// Nov račun
 if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $uporabnik_id = $_SESSION['uporabnik_id'];
     $query = "INSERT INTO predracun (uporabnik_id, st, dt, izdan, skupna_cena, koncna_cena) VALUES (?, 'NA', NOW(), 0, 0, 0)";
@@ -29,7 +27,6 @@ if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $stmt->close();
 }
 
-// Dodaj artikel
 if (isset($_POST['dodaj_artikel'])) {
     $artikel_id = $_POST['artikel_id'];
     $kolicina = 1;
@@ -40,7 +37,6 @@ if (isset($_POST['dodaj_artikel'])) {
     $stmt->close();
 }
 
-// Posodobi količino
 if (isset($_POST['posodobi_kolicino'])) {
     $artikel_predracun_id = $_POST['artikel_predracun_id'];
     $nova_kolicina = $_POST['kolicina'];
@@ -50,7 +46,6 @@ if (isset($_POST['posodobi_kolicino'])) {
     $stmt->close();
 }
 
-// Izbriši artikel
 if (isset($_POST['izbris_artikel'])) {
     $artikel_predracun_id = $_POST['artikel_predracun_id'];
     $stmt = $link->prepare("DELETE FROM artikel_predracun WHERE id = ?");
@@ -59,7 +54,6 @@ if (isset($_POST['izbris_artikel'])) {
     $stmt->close();
 }
 
-// Izdaja računa
 if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
     $racunId = $_SESSION['racunId'];
     $query = "SELECT a.cena, r.kolicina FROM artikli a 
@@ -158,9 +152,10 @@ if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
         <form method="POST">
             <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
         </form>
-        <form method="POST">
-            <button type="submit" name="izdaja" value="izdaja_racuna" class="btn akcija izdaj">Izdaj račun</button>
+        <form action="generiraj_pdf.php" method="POST">
+            <button type="submit" class="action-btn">Izdaj račun</button>
         </form>
+
 
         <?php
         if (isset($_POST['kategorija_id'])) {
