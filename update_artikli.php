@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <?php if ($uspesno): ?>
         <div class="obvestilo success">Artikel uspešno posodobljen.</div>
-        <script>setTimeout(() => window.location.href = 'izpis_artiklov.php', 2000);</script>
+        <script>setTimeout(() => window.location.href = 'pregled_artiklov.php', 2000);</script>
     <?php endif; ?>
 
     <?php if (!empty($napaka)): ?>
