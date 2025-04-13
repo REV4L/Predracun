@@ -17,7 +17,7 @@ $stmt = $link->prepare("DELETE FROM artikli WHERE id = ?");
 $stmt->bind_param("i", $id);
 
 if ($stmt->execute()) {
-    header("Location: izpis_artiklov.php");
+    header("Location: pregled_artiklov.php");
     exit();
 } else {
     echo "Napaka pri brisanju: " . htmlspecialchars(mysqli_error($link));
