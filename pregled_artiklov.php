@@ -14,14 +14,13 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 <head>
     <meta charset="UTF-8">
     <title>Izpis artiklov</title>
-    <link rel="stylesheet" href="izpis.css"> <!-- Make sure the file name is correct -->
+    <link rel="stylesheet" href="izpis.css">
 </head>
 <body>
     <h1>Izpis artiklov</h1>
     <form method="post" action="">
         Kategorija:
         <?php
-        // Query to get categories
         $query = "SELECT id, ime FROM kategorije";
         $result = mysqli_query($link, $query);
 
