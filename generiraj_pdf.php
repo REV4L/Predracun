@@ -8,21 +8,28 @@ if (!isset($_SESSION['racunId'])) {
 }
 
 $racunId = $_SESSION['racunId'];
-$ime = $_SESSION['ime'];
-$priimek = $_SESSION['priimek'];
+$ime = $_SESSION['ime'] ?? 'Neznano';
+$priimek = $_SESSION['priimek'] ?? '';
 $firma = "Moja Firma d.o.o.";
 
-// Pridobi podatke o računih in artiklih
 $query = "SELECT p.st, a.ime, a.cena, r.kolicina
           FROM predracun p
           INNER JOIN artikel_predracun r ON p.id = r.predracun_id
           INNER JOIN artikli a ON a.id = r.artikel_id
           WHERE p.id = ?";
+
 $stmt = $link->prepare($query);
+if (!$stmt) {
+    die("Napaka pri pripravi poizvedbe: " . $link->error);
+}
 $stmt->bind_param("i", $racunId);
-$stmt->execute();
+if (!$stmt->execute()) {
+    die("Napaka pri izvajanju poizvedbe: " . $stmt->error);
+}
+
 $result = $stmt->get_result();
 
+require('fpdf/fpdf.php');
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 16);
@@ -32,7 +39,7 @@ $pdf->Cell(0, 10, "Predračun št.: " . $racunId, 0, 1);
 $pdf->Cell(0, 10, "Prodajalec: " . $ime . " " . $priimek, 0, 1);
 $pdf->Ln(5);
 
-// Tabela z artikli
+// Tabela
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(80, 10, "Artikel", 1);
 $pdf->Cell(30, 10, "Količina", 1);
@@ -56,10 +63,10 @@ while ($row = $result->fetch_assoc()) {
     $pdf->Ln();
 }
 
-// Skupna cena
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(140, 10, "Skupaj", 1);
 $pdf->Cell(30, 10, number_format($skupnaCena, 2) . "€", 1);
 
+ob_clean(); // Zelo pomembno!
 $pdf->Output("I", "racun_" . $racunId . ".pdf");
 exit;
