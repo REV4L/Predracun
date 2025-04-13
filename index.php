@@ -16,7 +16,7 @@
     </div>
 
     <footer>
-        &copy; <?php echo date("Y"); ?> Blagajna Sistem
+        <p>&#169; Valentin Ozimic in Nikola Marinković 2025</p>
     </footer>
 </body>
 </html>
