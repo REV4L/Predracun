@@ -22,57 +22,66 @@ html {
     background-color: var(--bg);
     color: var(--text);
     transition: all 0.3s ease;
-}
-
-.sidebar {
-    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
-    position: fixed;
-    background-color: var(--card-bg);
-    padding: 20px;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
 }
 
-.sidebar h2 {
+.admin-container {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     text-align: center;
-    margin-bottom: 30px;
+    width: 350px;
+}
+
+.admin-container h2 {
+    margin-bottom: 15px;
     color: white;
 }
 
-.sidebar a {
+.pozdrav {
+    margin-bottom: 25px;
+    font-size: 14px;
+    color: white;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-buttons a {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    padding: 12px 20px;
-    margin: 10px 0;
+    padding: 12px;
     border-radius: 8px;
+    background-color: var(--green);
     text-decoration: none;
     color: white;
-    background-color: var(--green);
-    transition: background-color 0.3s;
     font-weight: bold;
+    transition: background-color 0.3s;
 }
 
-.sidebar a:hover {
+.menu-buttons a:hover {
     background-color: var(--green-hover);
 }
 
-.sidebar a.logout {
+.menu-buttons a.logout {
     background-color: var(--red);
 }
 
-.sidebar a.logout:hover {
+.menu-buttons a.logout:hover {
     background-color: var(--red-hover);
 }
 
-.container {
-    margin-left: 270px;
-    padding: 30px;
-}
-
 .toggle-theme {
-    margin-top: 30px;
-    text-align: center;
+    margin-top: 20px;
 }
 
 .toggle-theme button {
