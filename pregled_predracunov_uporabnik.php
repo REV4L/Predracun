@@ -3,7 +3,7 @@ require_once 'baza.php';
 session_start();
 
 // Dovoli samo prijavljenim uporabnikom (ni admin preverjanja)
-if (!isset($_SESSION['id']) || !isset($_SESSION['ime'])) {
+if (!isset($_SESSION['ime'])) {
     header("Location: prijava.php");
     exit();
 }
