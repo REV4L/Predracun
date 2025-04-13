@@ -11,6 +11,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'a') {
 <html lang="sl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dodajanje artiklov</title>
     <link rel="stylesheet" href="prijava.css">
 </head>

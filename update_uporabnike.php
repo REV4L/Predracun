@@ -60,6 +60,7 @@ mysqli_close($link);
 <html lang="sl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posodobitev uporabnika</title>
     <link rel="stylesheet" href="prijava.css">
     <style>

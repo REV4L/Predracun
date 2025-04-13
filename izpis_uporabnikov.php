@@ -13,6 +13,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 <html lang="sl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Izpis uporabnikov</title>
     <link rel="stylesheet" href="izpis.css">
 </head>
