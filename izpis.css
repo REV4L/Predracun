@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: ghostwhite;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: rgb(44, 152, 1);
+    margin-bottom: 30px;
+}
+
+form {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+select,
+input[type="submit"] {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+input[type="submit"] {
+    background-color: rgb(44, 152, 1);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: rgba(36, 126, 1, 0.859);
+}
+
+table {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: white;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+button {
+    padding: 6px 12px;
+    margin: 2px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+form[action*="delete"] button {
+    background-color: #e74c3c;
+}
+
+form[action*="delete"] button:hover {
+    background-color: #c0392b;
+}
+
+form[action*="update"] button {
+    background-color: #3498db;
+}
+
+form[action*="update"] button:hover {
+    background-color: #2980b9;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    color: white;
+    background-color: red;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}

@@ -23,7 +23,7 @@
     </div>
 
     <footer>
-        <p>&#169; Valentin Ozimic in Nikola Marinković 2025</p>
+        <p>&#169; 2025 Valentin Ozimic in Nikola Marinković </p>
     </footer>
 </body>
 </html>
