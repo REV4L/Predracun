@@ -1,6 +1,7 @@
 <?php
+ob_start();
 require_once 'baza.php';
-require_once 'fpdf/fpdf.php';
+require_once __DIR__ . '/fpdf/fpdf.php';
 session_start();
 
 if (!isset($_SESSION['racunId'])) {
@@ -28,8 +29,10 @@ if (!$stmt->execute()) {
 }
 
 $result = $stmt->get_result();
+if ($result->num_rows === 0) {
+    die("Ni artiklov za ta račun.");
+}
 
-require('fpdf/fpdf.php');
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 16);
@@ -63,10 +66,14 @@ while ($row = $result->fetch_assoc()) {
     $pdf->Ln();
 }
 
+// Skupaj
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(140, 10, "Skupaj", 1);
 $pdf->Cell(30, 10, number_format($skupnaCena, 2) . "€", 1);
 
-ob_clean(); // Zelo pomembno!
-$pdf->Output("I", "racun_" . $racunId . ".pdf");
+// Počisti buffer
+ob_end_clean();
+
+// Prikaži PDF v brskalniku
+$pdf->Output("D", "racun_" . $racunId . ".pdf");
 exit;
