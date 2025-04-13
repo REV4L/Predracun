@@ -108,3 +108,20 @@ footer {
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
+
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-container textarea:focus {
+    background-color: rgb(169, 255, 166);
+    outline-style: double;
+}
