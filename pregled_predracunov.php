@@ -25,6 +25,10 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
         $query_users = "SELECT id, ime, priimek FROM uporabniki";
         $result_users = mysqli_query($link, $query_users);
 
+        if (!$result_users) {
+            die("Napaka pri pridobivanju uporabnikov: " . mysqli_error($link));
+        }
+
         echo '<select name="uporabnik_id">';
         echo '<option value="">Vsi</option>';
         while ($user = mysqli_fetch_assoc($result_users)) {
@@ -44,6 +48,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     </form>
 
     <?php
+    // Priprava osnovne poizvedbe in pogojev
     $query = "SELECT p.id, p.datum, p.izdan, p.skupna_cena, p.koncna_cena, u.ime, u.priimek
               FROM predracun p
               JOIN uporabniki u ON p.uporabnik_id = u.id";
@@ -77,11 +82,21 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     $query .= " ORDER BY p.datum DESC";
 
     $stmt = $link->prepare($query);
+
+    if (!$stmt) {
+        die("Napaka pri pripravi poizvedbe: " . mysqli_error($link));
+    }
+
     if (!empty($params)) {
         $stmt->bind_param($types, ...$params);
     }
+
     $stmt->execute();
     $result = $stmt->get_result();
+
+    if (!$result) {
+        die("Napaka pri izvajanju poizvedbe: " . mysqli_error($link));
+    }
 
     echo '<table border="1" style="border-collapse: collapse">';
     echo '<tr>
