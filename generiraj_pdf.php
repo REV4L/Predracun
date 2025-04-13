@@ -1,7 +1,7 @@
 <?php
 ob_start();
 require_once 'baza.php';
-require_once __DIR__ . '/FPDF-master/fpdf.php';
+require_once __DIR__ . '../FPDF-master/fpdf.php';
 
 session_start();
 
