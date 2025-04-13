@@ -1,71 +1,92 @@
+:root {
+    --bg: ghostwhite;
+    --text: #000;
+    --card-bg: rgba(0, 0, 0, 0.7);
+    --green: rgb(44, 152, 1);
+    --green-hover: rgba(36, 126, 1, 0.9);
+    --red: #e74c3c;
+    --red-hover: #c0392b;
+}
+
+body.dark-mode {
+    --bg: #121212;
+    --text: #f2f2f2;
+    --card-bg: rgba(255, 255, 255, 0.05);
+}
+
 body,
 html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: ghostwhite;
+    background-color: var(--bg);
+    color: var(--text);
+    transition: all 0.3s ease;
 }
 
-.topnav {
-    background-color: rgba(0, 0, 0, 0.9);
-    overflow: hidden;
-    padding: 10px 0;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: var(--card-bg);
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
 }
 
-.topnav a {
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
     color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    background-color: rgb(44, 152, 1);
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
 }
 
-.topnav a:hover {
-    background-color: rgba(36, 126, 1, 0.9);
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    background-color: var(--green);
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.sidebar a:hover {
+    background-color: var(--green-hover);
+}
+
+.sidebar a.logout {
+    background-color: var(--red);
+}
+
+.sidebar a.logout:hover {
+    background-color: var(--red-hover);
 }
 
 .container {
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    max-width: 600px;
-    margin: 50px auto;
+    margin-left: 270px;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-theme {
+    margin-top: 30px;
     text-align: center;
 }
 
-.container span {
-    font-size: 16px;
-    font-weight: bold;
-    display: block;
-    margin-bottom: 20px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin: 15px 0;
-}
-
-li a {
-    color: white;
-    text-decoration: none;
-    background-color: rgb(44, 152, 1);
-    padding: 10px 20px;
+.toggle-theme button {
+    background-color: transparent;
+    border: 2px solid var(--green);
+    color: var(--green);
+    padding: 10px 15px;
     border-radius: 5px;
-    display: inline-block;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
 }
 
-li a:hover {
-    background-color: rgba(36, 126, 1, 0.9);
+.toggle-theme button:hover {
+    background-color: var(--green);
+    color: white;
 }
