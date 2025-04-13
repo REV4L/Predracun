@@ -42,6 +42,7 @@ $stmtPopust->bind_result($koncnaCena);
 $stmtPopust->fetch();
 $stmtPopust->close();
 
+require_once __DIR__ . '../FPDF-master/font/DejaVuSans.php';
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->AddFont('DejaVu','','DejaVuSans.php');
