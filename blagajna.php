@@ -9,7 +9,7 @@ if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
 }
 
 // Preveri, če je uporabnik admin
-$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'a';
 
 // Izpis pozdrava
 echo "<div class='pozdrav'>Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'] . "<br>";
