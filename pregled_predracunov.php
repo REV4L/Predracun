@@ -46,7 +46,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     <?php
     // Priprava osnovne poizvedbe in pogojev
     $query = "SELECT p.id, p.datum, p.izdan, p.skupna_cena, p.koncna_cena, u.ime, u.priimek
-              FROM predracuni p
+              FROM predracun p
               JOIN uporabniki u ON p.uporabnik_id = u.id";
     
     $conditions = [];
