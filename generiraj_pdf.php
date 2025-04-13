@@ -38,8 +38,7 @@ if ($result->num_rows === 0) {
 
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->AddFont('DejaVu','','DejaVuSans.php');
-$pdf->SetFont('DejaVu','',12);
+$pdf->SetFont('Arial', '', 12);
 $pdf->Cell(0, 10, $firma, 0, 1);
 $pdf->SetFont('Arial', '', 12);
 $pdf->Cell(0, 10, "Predračun št.: " . $racunId, 0, 1);
