@@ -77,6 +77,9 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 
     $query .= " ORDER BY p.datum DESC";
 
+    // Izpiši poizvedbo za diagnostiko
+    echo "<pre>$query</pre>";
+
     // Preverimo, če so parametri nastavljeni in jih povežemo
     if ($stmt = $link->prepare($query)) {
         if (!empty($params)) {
@@ -110,7 +113,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
         echo '</table>';
         $stmt->close();
     } else {
-        echo "Napaka pri pripravi poizvedbe.";
+        echo "Napaka pri pripravi poizvedbe. Prosim preverite SQL poizvedbo.";
     }
 
     mysqli_close($link);
