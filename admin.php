@@ -36,11 +36,5 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'a') {
             <button onclick="toggleTheme()">🌓 Zamenjaj temo</button>
         </div>
     </div>
-
-    <script>
-    function toggleTheme() {
-        document.body.classList.toggle("dark-mode");
-    }
-    </script>
 </body>
 </html>
