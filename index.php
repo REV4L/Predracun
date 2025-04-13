@@ -7,10 +7,16 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="container">
-        <h1>POZDRAVLJENI!</h1>
-        <p>Za nadaljevanje se morate prijaviti.</p>
-        <a href="prijava.php" class="login-btn">PRIJAVA</a>
+    <div class="form-container">
+        <h1>Dobrodošli v blagajni</h1>
+        <p class="pozdrav">Za nadaljevanje se morate prijaviti.</p>
+        <div id="center">
+            <a href="prijava.php" id="submit" class="gumb">PRIJAVA</a>
+        </div>
     </div>
+
+    <footer>
+        &copy; <?php echo date("Y"); ?> Blagajna Sistem
+    </footer>
 </body>
 </html>

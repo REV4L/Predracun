@@ -1,33 +1,65 @@
-body {
+body,
+html {
+    height: 100%;
     margin: 0;
-    padding: 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #e0eafc, #cfdef3);
-    height: 100vh;
+    font-family: Arial, sans-serif;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: ghostwhite;
 }
 
-.container {
-    background-color: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+.form-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 12px;
+    width: 340px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    color: white;
     text-align: center;
 }
 
-.login-btn {
+.form-container h1 {
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.pozdrav {
+    margin-bottom: 25px;
+    font-size: 1em;
+}
+
+#submit {
     display: inline-block;
-    margin-top: 20px;
-    padding: 12px 24px;
-    background-color: #007bff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(44, 152, 1);
     color: white;
+    font-weight: bold;
     text-decoration: none;
-    border-radius: 8px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.login-btn:hover {
-    background-color: #0056b3;
+#submit:hover {
+    background-color: rgba(36, 126, 1, 0.859);
+}
+
+#center {
+    display: flex;
+    justify-content: center;
+}
+
+footer {
+    margin-top: 40px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    bottom: 0;
 }
