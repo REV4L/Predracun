@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["sub"])) {
             $napaka = "Uporabniško ime (email) že obstaja.";
         } else {
             // Vstavi novega uporabnika
-            $stmt = $link->prepare("INSERT INTO uporabniki (ime, priimek, email, pass, telefon, role) VALUES (?, ?, ?, sha1(?), ?, ?)");
+            $stmt = $link->prepare("INSERT INTO uporabniki (ime, priimek, email, pasw, telefon, role) VALUES (?, ?, ?, sha1(?), ?, ?)");
             $stmt->bind_param("ssssss", $ime, $priimek, $email, $geslo, $telefon, $role);
 
             if ($stmt->execute()) {
