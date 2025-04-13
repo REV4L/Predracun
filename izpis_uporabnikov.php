@@ -23,7 +23,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     $result = mysqli_query($link, $query);
 
     echo '<table border="1" style="border-collapse: collapse">';
-    echo '<tr><th>ID</th><th>Ime</th><th>Priimek</th><th>Telefonska</th><th>Uporabniško ime</th><th>Geslo</th><th>Akcija</th></tr>';
+    echo '<tr><th>ID</th><th>Ime</th><th>Priimek</th><th>Telefonska</th><th>Uporabniško ime</th><th>Akcija</th></tr>';
 
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<tr>";
@@ -32,7 +32,6 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
         echo "<td>" . htmlspecialchars($row['priimek']) . "</td>";
         echo "<td>" . htmlspecialchars($row['telefon']) . "</td>";
         echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['pasw']) . "</td>";
         if ($row['role'] != 'a') {
             echo "<td>
                     <form action='delete_user.php' method='POST' style='display:inline;'>
