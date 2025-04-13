@@ -15,7 +15,7 @@ $firma = "Moja Firma d.o.o.";
 // Pridobi podatke o računih in artiklih
 $query = "SELECT p.st, a.ime, a.cena, r.kolicina
           FROM predracun p
-          INNER JOIN artikli1 r ON p.id = r.predracun_id
+          INNER JOIN artikel_predracun r ON p.id = r.predracun_id
           INNER JOIN artikli a ON a.id = r.artikel_id
           WHERE p.id = ?";
 $stmt = $link->prepare($query);
