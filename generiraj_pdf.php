@@ -2,6 +2,9 @@
 ob_start();
 require_once 'baza.php';
 require_once __DIR__ . '/fpdf/fpdf.php';
+require('makefont/makefont.php');
+MakeFont('DejaVuSans.ttf','cp1250');
+
 session_start();
 
 if (!isset($_SESSION['racunId'])) {
@@ -35,7 +38,8 @@ if ($result->num_rows === 0) {
 
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->SetFont('Arial', 'B', 16);
+$pdf->AddFont('DejaVu','','DejaVuSans.php');
+$pdf->SetFont('DejaVu','',12);
 $pdf->Cell(0, 10, $firma, 0, 1);
 $pdf->SetFont('Arial', '', 12);
 $pdf->Cell(0, 10, "Predračun št.: " . $racunId, 0, 1);
