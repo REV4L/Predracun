@@ -45,7 +45,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 
     <?php
     // Priprava osnovne poizvedbe in pogojev
-    $query = "SELECT p.id, p.datum, p.izdan, p.skupna_cena, p.koncna_cena, u.ime, u.priimek
+    $query = "SELECT p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena, u.ime AS uporabnik_ime, u.priimek
               FROM predracun p
               JOIN uporabniki u ON p.uporabnik_id = u.id";
     
@@ -60,13 +60,13 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     }
 
     if (!empty($_POST['datum_od'])) {
-        $conditions[] = "p.datum >= ?";
+        $conditions[] = "p.dt >= ?";
         $params[] = $_POST['datum_od'];
         $types .= "s";
     }
 
     if (!empty($_POST['datum_do'])) {
-        $conditions[] = "p.datum <= ?";
+        $conditions[] = "p.dt <= ?";
         $params[] = $_POST['datum_do'];
         $types .= "s";
     }
@@ -75,7 +75,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
         $query .= " WHERE " . implode(" AND ", $conditions);
     }
 
-    $query .= " ORDER BY p.datum DESC";
+    $query .= " ORDER BY p.dt DESC";
 
     // Izpiši poizvedbo za diagnostiko
     echo "<pre>$query</pre>";
@@ -95,18 +95,18 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
                 <th>Izdan</th>
                 <th>Skupna cena</th>
                 <th>Končna cena</th>
-                <th>Uporabnik</th>
+                <th>Uporabnik ime</th>
               </tr>';
 
         while ($row = mysqli_fetch_assoc($result)) {
             $izdan = $row['izdan'] ? 'Da' : 'Ne';
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['datum']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['st']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['dt']) . "</td>";
             echo "<td>" . $izdan . "</td>";
             echo "<td>" . htmlspecialchars($row['skupna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['koncna_cena']) . " €</td>";
-            echo "<td>" . htmlspecialchars($row['ime']) . " " . htmlspecialchars($row['priimek']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['uporabnik_ime']) . " " . htmlspecialchars($row['priimek']) . "</td>";
             echo "</tr>";
         }
 
