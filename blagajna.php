@@ -16,9 +16,9 @@ echo "<div class='pozdrav'>Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SE
 echo "<a href='odjava.php'>Odjava</a>";
 if ($isAdmin) {
     echo " | <a href='admin.php'>Nazaj na admin panel</a>";
-    echo " | <a href='pregled_predracunov_uporabnik.php'>Moji predračuni</a>" 
+    echo " | <a href='pregled_predracunov_uporabnik.php'>Moji predračuni</a>";
 }else{
-    echo " | <a href='pregled_predracunov_uporabnik.php'>Moji predračuni</a>" 
+    echo " | <a href='pregled_predracunov_uporabnik.php'>Moji predračuni</a>";
 }
 echo "</div>";
 ?>
