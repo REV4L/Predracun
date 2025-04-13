@@ -13,7 +13,6 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-// Za prikaz obvestil
 $uspesno = false;
 $napaka = '';
 

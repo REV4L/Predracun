@@ -5,7 +5,6 @@ require_once 'seja.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Preveri, če je admin prijavljen
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'a') {
     header("Location: index.php");
     exit();
@@ -14,9 +13,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'a') {
 $uspesno = false;
 $napaka = '';
 
-// Če je obrazec oddan
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["sub"])) {
-    // Preveri obvezna polja
     if (empty($_POST["ime"]) || empty($_POST["priimek"]) || empty($_POST["telefonska"]) || empty($_POST["username"]) || empty($_POST["pass"]) || empty($_POST["role"])) {
         $napaka = "Vsa polja morajo biti izpolnjena.";
     } else {
@@ -27,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["sub"])) {
         $geslo = $_POST["pass"];
         $role = $_POST["role"];
 
-        // Preveri, če email že obstaja
         $stmt = $link->prepare("SELECT * FROM uporabniki WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -36,7 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["sub"])) {
         if ($rezultat->num_rows > 0) {
             $napaka = "Uporabniško ime (email) že obstaja.";
         } else {
-            // Vstavi novega uporabnika
             $stmt = $link->prepare("INSERT INTO uporabniki (ime, priimek, email, pasw, telefon, role) VALUES (?, ?, ?, sha1(?), ?, ?)");
             $stmt->bind_param("ssssss", $ime, $priimek, $email, $geslo, $telefon, $role);
 

@@ -5,7 +5,6 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Preveri, če je prijavljen admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'a') {
     header("Location: prijava.php");
     exit();
@@ -14,7 +13,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'a') {
 $uspesno = false;
 $napaka = '';
 
-// Obdelava obrazca
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['sub'])) {
     $ime = $_POST['ime'];
     $cena = $_POST['cena'];

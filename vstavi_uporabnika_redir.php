@@ -3,7 +3,6 @@ require_once 'baza.php';
 
 if (!isset($_POST["sub"])) die("Nepravilen dostop");
 
-// Preverjanje, ali so vsa polja izpolnjena
 if (empty($_POST["ime"]) || empty($_POST["priimek"]) || empty($_POST["username"]) || empty($_POST["pass"]) || empty($_POST['telefonska']) || empty($_POST["role"])) {
     die("Nepravilen vnos. Vsa polja morajo biti izpolnjena.");
 }
@@ -13,9 +12,8 @@ $priimek = $_POST["priimek"];
 $username = $_POST["username"];
 $pass = $_POST["pass"];
 $telefonska = $_POST['telefonska'];
-$role = $_POST["role"]; // Shranimo vlogo kot 'a' za admina in 'p' za uporabnika
+$role = $_POST["role"]; 
 
-// Preveri, če uporabniško ime že obstaja
 $query = "SELECT * FROM uporabniki WHERE username = ?";
 $stmt = $link->prepare($query);
 $stmt->bind_param("s", $username);
@@ -29,7 +27,6 @@ if ($result->num_rows > 0) {
 
 $stmt->close();
 
-// Vstavljanje novega uporabnika
 $sql = "INSERT INTO uporabniki (ime, priimek, telefon, email, pasw, role) VALUES (?, ?, ?, ?, sha1(?), ?)";
 $stmt = $link->prepare($sql);
 $stmt->bind_param("ssssss", $ime, $priimek, $telefonska, $username, $pass, $role);

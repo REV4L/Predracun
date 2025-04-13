@@ -2,7 +2,6 @@
 require_once 'baza.php';
 session_start();
 
-// Dovoli samo prijavljenim uporabnikom
 if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
     header("Location: prijava.php");
     exit();
@@ -31,7 +30,6 @@ echo "Prijavljeni ste kot " . htmlspecialchars($_SESSION['ime']) . " " . htmlspe
     </form>
 
     <?php
-    // Osnovna poizvedba
     $query = "SELECT p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena
               FROM predracun p
               WHERE p.uporabnik_id = (
@@ -41,7 +39,6 @@ echo "Prijavljeni ste kot " . htmlspecialchars($_SESSION['ime']) . " " . htmlspe
     $params = [$_SESSION['ime'], $_SESSION['priimek']];
     $types = "ss";
 
-    // Datum filtriranje
     if (!empty($_POST['datum_od'])) {
         $query .= " AND p.dt >= ?";
         $params[] = $_POST['datum_od'];
@@ -56,9 +53,7 @@ echo "Prijavljeni ste kot " . htmlspecialchars($_SESSION['ime']) . " " . htmlspe
 
     $query .= " ORDER BY p.dt DESC";
 
-    // Priprava in izvedba
     if ($stmt = $link->prepare($query)) {
-        // Dinamičen bind_param
         $bind_names[] = $types;
         for ($i = 0; $i < count($params); $i++) {
             $bind_name = 'bind' . $i;
@@ -70,7 +65,6 @@ echo "Prijavljeni ste kot " . htmlspecialchars($_SESSION['ime']) . " " . htmlspe
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Tabela rezultatov
         echo '<table border="1" style="border-collapse: collapse">';
         echo '<tr>
                 <th>Št.</th>

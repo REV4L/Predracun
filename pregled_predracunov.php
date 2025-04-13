@@ -44,7 +44,6 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     </form>
 
     <?php
-    // Priprava osnovne poizvedbe in pogojev
     $query = "SELECT p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena, u.ime AS uporabnik_ime, u.priimek
               FROM predracun p
               JOIN uporabniki u ON p.uporabnik_id = u.id";
@@ -77,7 +76,6 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 
     $query .= " ORDER BY p.dt DESC";
 
-    // Preverimo, če so parametri nastavljeni in jih povežemo
     if ($stmt = $link->prepare($query)) {
         if (!empty($params)) {
             $stmt->bind_param($types, ...$params);
