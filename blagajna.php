@@ -7,21 +7,17 @@ if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
     exit();
 }
 
-// Preverba, ali je uporabnik admin
-$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'a';
+echo "<div class='pozdrav'>Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'] . "<br><a href='odjava.php'>Odjava</a></div>";
 
-echo "<div class='pozdrav'>Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'] . "<br>";
-echo "<a href='odjava.php'>Odjava</a>";
-if ($isAdmin) {
-    echo " | <a href='admin.php'>Nazaj na admin panel</a>";
+if ($_SESSION['role'] == 'a') {
+    echo "<div><a href='admin.php'>Nazaj na admin panel</a></div>";
 }
-echo "</div>";
 ?>
 <!DOCTYPE html>
 <html lang="sl">
 <head>
     <meta charset="UTF-8">
-    <title>Blagajna za bar</title>
+    <title>Blagajna</title>
     <link rel="stylesheet" href="blagajna.css">
 </head>
 <body>
@@ -41,114 +37,62 @@ echo "</div>";
                     <tbody id="predracun-body">
                     </tbody>
                     <?php 
-                        if (isset($_SESSION['racunId'])) {
-                            $racunId = $_SESSION['racunId'];
-                            $query = "SELECT r.id as rId, p.id, p.ime, p.cena FROM pijace p
-                                      INNER JOIN pijace_racun r ON p.id = r.pijace_id
-                                      INNER JOIN racun ra ON ra.id = r.racun_id
-                                      WHERE ra.id = $racunId";
-                            $result = mysqli_query($link, $query);
-                            $skupnaCena = 0;
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                $itemId = $row['id'];
-                                $rId = $row['rId'];
-                                $skupnaCena += $row['cena'];
-                                echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row['ime']) . "</td>";
-                                echo "<td>1</td>";
-                                echo "<td>" . htmlspecialchars($row['cena']) . "€</td>";
-                                echo "<td><form action='izbris_racun.php' method='post'>
-                                          <button type='submit' name='rId' value='$rId'>Izbris</button>
-                                      </form></td>";
-                                echo "</tr>";
-                            }
+                    if (isset($_SESSION['racunId'])) {
+                        $racunId = $_SESSION['racunId'];
+                        $query = "SELECT r.id AS rId, a.ime, a.cena 
+                                  FROM artikli a 
+                                  INNER JOIN artikli1 r ON a.id = r.artikel_id 
+                                  WHERE r.predracun_id = $racunId";
+
+                        $result = mysqli_query($link, $query);
+
+                        $skupnaCena = 0;
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $rId = $row['rId'];
+                            $skupnaCena += $row['cena'];
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['ime']) . "</td>";
+                            echo "<td>1</td>";
+                            echo "<td>" . htmlspecialchars($row['cena']) . "€</td>";
+                            echo "<td><form action='izbris_racun.php' method='post'>
+                                    <button type='submit' name='rId' value='$rId'>Izbris</button>
+                                  </form></td>";
+                            echo "</tr>";
                         }
+                    }
                     ?>
                 </table>
                 <h4>Skupni znesek: <span id="skupni-znesek"><?php echo $skupnaCena; ?></span> €</h4>
             </div>
         </div>
-        
+
         <div class="right-panel">
-            <div class="kategorije">
-                <form method="post" action="">
-                    Kategorija:
-                    <?php
-                        $query = "SELECT id, ime FROM kategorija";
-                        $result = mysqli_query($link, $query);
-                        if (!$result) {
-                            die("Napaka pri pridobivanju kategorij: " . mysqli_error($link));
-                        }
-                        echo '<select name="kategorija_id" required>';
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $id = htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8');
-                            $ime = htmlspecialchars($row['ime'], ENT_QUOTES, 'UTF-8');
-                            echo "<option value=\"$id\">$ime</option>";
-                        }
-                        echo '</select>';
-                    ?>
-                    <input type="submit" name="submit" value="Prikaži">
-                </form>
-
-                <?php
-                    if (isset($_POST['submit'])) {
-                        $kategorija_id = $_POST['kategorija_id'];
-                        $query = "SELECT * FROM pijace WHERE kategorija_id = ?";
-                        $stmt = $link->prepare($query);
-                        $stmt->bind_param("i", $kategorija_id);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-
-                        echo '<table border="1" style="border-collapse: collapse">';
-                        echo '<tr><th>ID</th><th>Ime</th><th>Cena</th><th>Kategorija ID</th><th>Akcija</th></tr>';
-
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $itemId = $row['id'];
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['ime']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['cena']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['kategorija_id']) . "</td>";
-                            echo "<td>
-                                    <form action='dodaj.php' method='POST' style='display:inline;'>
-                                        <input type='hidden' name='id' value='" . $row['id'] . "'>
-                                        <button type='submit' name='itemId' value='$itemId'>Dodaj</button>
-                                    </form>
-                                  </td>";
-                            echo "</tr>";
-                        }
-                        echo "</table>";
-                        $stmt->close();
-                    }
-                ?>
-            </div>
-
             <form action="#" method="POST">
-                <input type="submit" name="sub" value="Nov Račun">
+                <input type="submit" name="sub" value="novracun">
             </form>
-
             <form action="#" method="POST">
-                <input type="submit" name="izdaja" value="Izdaja Računa">
+                <input type="submit" name="izdaja" value="izdaja_racuna">
             </form>
 
             <?php
-            if (isset($_POST['sub']) && $_POST['sub'] == 'Nov Račun') {
-                $uporabnik_id = $_SESSION['uporabnik_id']; 
-                $query = "INSERT INTO racun (miza_id, natakar_id, datum) VALUES (NULL, $uporabnik_id, NOW())";
+            if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
+                $uporabnik_id = $_SESSION['id'];  // Assuming session stores user id
+                $query = "INSERT INTO predracun (st, dt, uporabnik_id) VALUES ('nov', NOW(), $uporabnik_id)";
                 $result = mysqli_query($link, $query);
 
                 if ($result) {
-                    $query = "SELECT id FROM racun ORDER BY id DESC LIMIT 1";
+                    $query = "SELECT id FROM predracun ORDER BY id DESC LIMIT 1";
                     $result = mysqli_query($link, $query);
                     $row = mysqli_fetch_assoc($result);
                     $_SESSION['racunId'] = $row['id'];
                 } else {
-                    echo "Napaka pri ustvarjanju novega računa: " . $stmt->error;
+                    echo "Napaka pri ustvarjanju novega predračuna.";
                 }
+
                 unset($_POST['sub']);
             }
 
-            if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'Izdaja Računa') {
+            if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
                 unset($_SESSION['racunId']);
                 unset($_POST['izdaja']);
             }
