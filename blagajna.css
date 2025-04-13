@@ -124,3 +124,40 @@ table td {
 .action-btn:hover {
     background-color: #256e00;
 }
+
+/* New discount button */
+.discount-btn {
+    background-color: #f39c12;
+    color: white;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.discount-btn:hover {
+    background-color: #e67e22;
+}
+
+/* Input fields for the discount percentage */
+.discount-input {
+    padding: 8px;
+    width: 80px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.discount-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
