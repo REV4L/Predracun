@@ -77,9 +77,6 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 
     $query .= " ORDER BY p.dt DESC";
 
-    // Izpiši poizvedbo za diagnostiko
-    echo "<pre>$query</pre>";
-
     // Preverimo, če so parametri nastavljeni in jih povežemo
     if ($stmt = $link->prepare($query)) {
         if (!empty($params)) {
