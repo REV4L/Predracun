@@ -2,8 +2,6 @@
 ob_start();
 require_once 'baza.php';
 require_once __DIR__ . '/fpdf/fpdf.php';
-require('makefont/makefont.php');
-MakeFont('DejaVuSans.ttf','cp1250');
 
 session_start();
 
@@ -16,7 +14,7 @@ $ime = $_SESSION['ime'] ?? 'Neznano';
 $priimek = $_SESSION['priimek'] ?? '';
 $firma = "Moja Firma d.o.o.";
 
-$query = "SELECT p.st, a.ime, a.cena, r.kolicina
+$query = "SELECT p.st, p.dt, a.ime, a.cena, r.kolicina
           FROM predracun p
           INNER JOIN artikel_predracun r ON p.id = r.predracun_id
           INNER JOIN artikli a ON a.id = r.artikel_id
@@ -36,26 +34,35 @@ if ($result->num_rows === 0) {
     die("Ni artiklov za ta račun.");
 }
 
+require_once __DIR__ . '/fpdf/font/makefont/makefont.php';
+// Pisava mora biti že dodana v fpdf/font kot DejaVuSans.php + .z
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->SetFont('Arial', '', 12);
+$pdf->AddFont('DejaVu','','DejaVuSans.php');
+$pdf->SetFont('DejaVu','',12);
+
 $pdf->Cell(0, 10, $firma, 0, 1);
-$pdf->SetFont('Arial', '', 12);
 $pdf->Cell(0, 10, "Predračun št.: " . $racunId, 0, 1);
 $pdf->Cell(0, 10, "Prodajalec: " . $ime . " " . $priimek, 0, 1);
-$pdf->Ln(5);
 
-// Tabela
-$pdf->SetFont('Arial', 'B', 12);
+$datum = '';
+$skupnaCena = 0;
+
+// Tabela glava
+$pdf->Ln(5);
+$pdf->SetFont('DejaVu', 'B', 12);
 $pdf->Cell(80, 10, "Artikel", 1);
 $pdf->Cell(30, 10, "Količina", 1);
 $pdf->Cell(30, 10, "Cena", 1);
 $pdf->Cell(30, 10, "Skupaj", 1);
 $pdf->Ln();
 
-$skupnaCena = 0;
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('DejaVu', '', 12);
 while ($row = $result->fetch_assoc()) {
+    if ($datum === '') {
+        $datum = date("d.m.Y", strtotime($row['dt']));
+    }
+
     $artikel = $row['ime'];
     $kolicina = $row['kolicina'];
     $cena = $row['cena'];
@@ -69,14 +76,16 @@ while ($row = $result->fetch_assoc()) {
     $pdf->Ln();
 }
 
-// Skupaj
-$pdf->SetFont('Arial', 'B', 12);
+// Skupaj + datum
+$pdf->SetFont('DejaVu', 'B', 12);
 $pdf->Cell(140, 10, "Skupaj", 1);
 $pdf->Cell(30, 10, number_format($skupnaCena, 2) . "€", 1);
+$pdf->Ln(10);
 
-// Počisti buffer
+$pdf->SetFont('DejaVu', '', 12);
+$pdf->Cell(0, 10, "Datum: " . $datum, 0, 1);
+
 ob_end_clean();
-
-// Prikaži PDF v brskalniku
 $pdf->Output("D", "racun_" . $racunId . ".pdf");
 exit;
+?>
