@@ -30,7 +30,7 @@ if ($result->num_rows > 0) {
 $stmt->close();
 
 // Vstavljanje novega uporabnika
-$sql = "INSERT INTO uporabniki (ime, priimek, telefonska, username, pasw, role) VALUES (?, ?, ?, ?, sha1(?), ?)";
+$sql = "INSERT INTO uporabniki (ime, priimek, telefon, email, pasw, role) VALUES (?, ?, ?, ?, sha1(?), ?)";
 $stmt = $link->prepare($sql);
 $stmt->bind_param("ssssss", $ime, $priimek, $telefonska, $username, $pass, $role);
 
