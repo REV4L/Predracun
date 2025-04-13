@@ -1,24 +1,27 @@
 :root {
-    --bg: ghostwhite;
-    --text: #000;
-    --card-bg: rgba(0, 0, 0, 0.7);
-    --green: rgb(44, 152, 1);
-    --green-hover: rgba(36, 126, 1, 0.9);
-    --red: #e74c3c;
-    --red-hover: #c0392b;
-}
-
-body.dark-mode {
-    --bg: #121212;
-    --text: #f2f2f2;
-    --card-bg: rgba(255, 255, 255, 0.05);
+    --bg: #fafafa;
+    /* svetla barva ozadja */
+    --text: #333;
+    /* temnejša barva besedila za boljši kontrast */
+    --card-bg: #ffffff;
+    /* bela ozadja za vse karte */
+    --primary: #2c8f01;
+    /* zelena barva za poudarke */
+    --primary-hover: #268f01;
+    /* temnejša zelena ob hoverju */
+    --danger: #e74c3c;
+    /* rdeča za izredne akcije */
+    --danger-hover: #c0392b;
+    /* temnejša rdeča ob hoverju */
+    --border: #ddd;
+    /* svetlo siva meja */
 }
 
 body,
 html {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: var(--bg);
     color: var(--text);
     transition: all 0.3s ease;
@@ -35,21 +38,20 @@ html {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    padding: 10px;
-    font-size: 16px;
+    padding: 15px;
     text-align: center;
+    font-size: 16px;
     z-index: 100;
 }
 
 .container {
     display: flex;
     flex-direction: row;
-    border: 1px solid #000;
     width: 90%;
     height: 90%;
     background-color: var(--card-bg);
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .left-panel {
@@ -57,9 +59,7 @@ html {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    border-right: 1px solid #000;
-    background-color: var(--card-bg);
-    border-radius: 12px 0 0 12px;
+    border-right: 1px solid var(--border);
 }
 
 .right-panel {
@@ -67,126 +67,105 @@ html {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: var(--card-bg);
-    border-radius: 0 12px 12px 0;
 }
 
 .predracun,
 .kategorije {
-    flex: 1;
-    border: 1px solid #000;
-    margin-bottom: 10px;
-    overflow-y: auto;
-    padding: 10px;
-    overflow: scroll;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+    padding: 20px;
     background-color: var(--card-bg);
     border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
 }
 
-.kategorije button {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 5px;
-    cursor: pointer;
-    background-color: var(--green);
+.kategorije button,
+button {
+    padding: 12px 20px;
+    margin-top: 10px;
+    background-color: var(--primary);
     color: white;
-    font-weight: bold;
     border: none;
     border-radius: 8px;
-    transition: background-color 0.3s;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
 
-.kategorije button:hover {
-    background-color: var(--green-hover);
+.kategorije button:hover,
+button:hover {
+    background-color: var(--primary-hover);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: var(--card-bg);
-    border-radius: 8px;
+    margin-top: 20px;
 }
 
 th,
 td {
-    border: 1px solid #000;
-    padding: 10px;
+    padding: 12px;
     text-align: left;
+    border: 1px solid var(--border);
 }
 
 th {
-    background-color: var(--green);
+    background-color: var(--primary);
     color: white;
     font-weight: bold;
 }
 
 td {
     background-color: var(--card-bg);
+    color: var(--text);
 }
 
-button {
-    padding: 8px 16px;
-    background-color: var(--green);
+td button {
+    padding: 6px 12px;
+    background-color: var(--danger);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: var(--green-hover);
-}
-
-.menu-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+td button:hover {
+    background-color: var(--danger-hover);
 }
 
 .menu-buttons a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 12px;
-    border-radius: 8px;
-    background-color: var(--green);
-    text-decoration: none;
+    padding: 12px 20px;
+    margin-top: 10px;
+    background-color: var(--primary);
     color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
     font-weight: bold;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
 .menu-buttons a:hover {
-    background-color: var(--green-hover);
-}
-
-.menu-buttons a.logout {
-    background-color: var(--red);
-}
-
-.menu-buttons a.logout:hover {
-    background-color: var(--red-hover);
-}
-
-.toggle-theme {
-    margin-top: 20px;
+    background-color: var(--primary-hover);
 }
 
 .toggle-theme button {
     background-color: transparent;
-    border: 2px solid var(--green);
-    color: var(--green);
-    padding: 10px 15px;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    margin-top: 20px;
 }
 
 .toggle-theme button:hover {
-    background-color: var(--green);
+    background-color: var(--primary);
     color: white;
 }
