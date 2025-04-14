@@ -1,95 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-top: 60px;
+    background-color: #f0f0f0;
+}
+
 .pozdrav {
     position: fixed;
     top: 0;
     left: 0;
+    background-color: #2C9801;
+    color: white;
+    padding: 10px;
     width: 100%;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
+    text-align: center;
+    z-index: 999;
 }
 
 .container {
     display: flex;
     flex-direction: row;
-    border: 1px solid #000;
-    width: 90%;
-    height: 90%;
+    width: 95%;
+    margin: 0 auto;
+    height: 85vh;
     background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.left-panel,
+.right-panel {
+    padding: 15px;
+    overflow-y: auto;
 }
 
 .left-panel {
     flex: 3;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    border-right: 1px solid #000;
+    border-right: 1px solid #ccc;
 }
 
 .right-panel {
     flex: 2;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    gap: 15px;
 }
 
 .predracun,
 .kategorije {
-    flex: 1;
-    border: 1px solid #000;
-    margin-bottom: 10px;
-    overflow-y: auto;
+    border: 1px solid #ccc;
     padding: 10px;
-    overflow: scroll;
-}
-
-.kategorije form {
-    display: flex;
-    flex-wrap: wrap;
-    /* omogoči prelom vrstic */
-    gap: 10px;
-    /* razmik med gumbi */
-}
-
-.kategorije button {
-    flex: 1 1 30%;
-    /* vsak gumb naj bo vsaj 30% širine */
-    min-width: 150px;
-    /* minimalna širina gumba */
-    padding: 15px;
     margin-bottom: 10px;
-    cursor: pointer;
-    background-color: #2C9801;
-    /* zeleni gumb */
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-    text-align: center;
-    /* poravnava besedila */
-}
-
-.kategorije button:hover {
-    background-color: rgba(36, 126, 1, 0.9);
-    /* temnejša barva ob hoverju */
-}
-
-.kategorije button:focus {
-    outline: none;
-}
-
-.odprti-racuni,
-.mize,
-.racun,
-.izhod {
-    margin-bottom: 10px;
+    background: #fafafa;
 }
 
 table {
@@ -97,9 +58,106 @@ table {
     border-collapse: collapse;
 }
 
-th,
-td {
-    border: 1px solid #000;
-    padding: 5px;
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 6px;
     text-align: left;
+}
+
+.kategorije form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.kategorije button {
+    flex: 1 1 30%;
+    min-width: 120px;
+    padding: 10px;
+    background-color: #2C9801;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.kategorije button:hover {
+    background-color: #1e6600;
+}
+
+.btn.akcija {
+    padding: 12px;
+    font-size: 16px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn.akcija.izdaj {
+    background-color: #cc0000;
+}
+
+.btn.akcija:hover {
+    opacity: 0.85;
+}
+
+.action-btn {
+    background-color: #2C9801;
+    color: white;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.action-btn:hover {
+    background-color: #256e00;
+}
+
+/* New discount button */
+.discount-btn {
+    background-color: #f39c12;
+    color: white;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.discount-btn:hover {
+    background-color: #e67e22;
+}
+
+/* Input fields for the discount percentage */
+.discount-input {
+    padding: 8px;
+    width: 80px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.discount-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
