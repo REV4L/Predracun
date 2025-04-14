@@ -1,12 +1,8 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
     background-color: #f0f0f0;
-    padding-top: 60px;
+    margin: 0;
+    padding-top: 50px;
 }
 
 .pozdrav {
@@ -21,40 +17,39 @@ body {
     z-index: 999;
 }
 
-.container {
+.main-wrapper {
     display: flex;
-    flex-direction: row;
-    width: 90%;
-    height: 90%;
-    background-color: #fff;
-    border: 1px solid #000;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
 }
 
-.left-panel,
-.right-panel {
-    padding: 10px;
+.left-section {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    width: 70%;
+}
+
+.right-section {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 15px;
+    height: 350px;
     overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.left-panel {
-    flex: 3;
-    border-right: 1px solid #000;
-}
-
-.right-panel {
-    flex: 2;
-}
-
-.predracun,
-.kategorije {
-    flex: 1;
-    border: 1px solid #000;
-    padding: 10px;
-    margin-bottom: 10px;
-    background: #fafafa;
-    overflow: auto;
+.predracun h3 {
+    margin-top: 0;
 }
 
 table {
@@ -62,105 +57,53 @@ table {
     border-collapse: collapse;
 }
 
-table th,
-table td {
+th,
+td {
     border: 1px solid #000;
     padding: 5px;
     text-align: left;
 }
 
-.kategorije form {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.kategorije select,
+.kategorije button {
+    padding: 8px;
+    font-size: 14px;
+    margin-right: 5px;
+    border-radius: 5px;
 }
 
 .kategorije button {
-    width: 100%;
-    padding: 10px;
     background-color: #2C9801;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
 }
 
 .kategorije button:hover {
-    background-color: #1e6600;
-}
-
-.btn.akcija {
-    padding: 12px;
-    font-size: 16px;
-    background-color: #0077cc;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.btn.akcija.izdaj {
-    background-color: #cc0000;
-}
-
-.btn.akcija:hover {
-    opacity: 0.85;
-}
-
-.action-btn {
-    background-color: #2C9801;
-    color: white;
-    font-weight: bold;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-    width: 100%;
-}
-
-.action-btn:hover {
     background-color: #256e00;
 }
 
-.discount-btn {
-    background-color: #f39c12;
+.btn {
+    background-color: #2C9801;
     color: white;
     font-weight: bold;
-    padding: 12px 20px;
+    padding: 12px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 10px;
-    transition: background-color 0.3s;
     width: 100%;
-}
-
-.discount-btn:hover {
-    background-color: #e67e22;
-}
-
-.discount-input {
-    padding: 8px;
-    width: 80px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    margin-right: 10px;
     text-align: center;
 }
 
-.discount-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+.btn:hover {
+    background-color: #256e00;
+}
+
+.btn.izdaja {
+    background-color: #cc0000;
+}
+
+.btn.izdaja:hover {
+    background-color: #990000;
 }
