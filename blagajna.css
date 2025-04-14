@@ -49,11 +49,40 @@ body {
     overflow: scroll;
 }
 
+.kategorije form {
+    display: flex;
+    flex-wrap: wrap;
+    /* omogoči prelom vrstic */
+    gap: 10px;
+    /* razmik med gumbi */
+}
+
 .kategorije button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 5px;
+    flex: 1 1 30%;
+    /* vsak gumb naj bo vsaj 30% širine */
+    min-width: 150px;
+    /* minimalna širina gumba */
+    padding: 15px;
+    margin-bottom: 10px;
     cursor: pointer;
+    background-color: #2C9801;
+    /* zeleni gumb */
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    text-align: center;
+    /* poravnava besedila */
+}
+
+.kategorije button:hover {
+    background-color: rgba(36, 126, 1, 0.9);
+    /* temnejša barva ob hoverju */
+}
+
+.kategorije button:focus {
+    outline: none;
 }
 
 .odprti-racuni,
