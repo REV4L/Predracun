@@ -1,6 +1,6 @@
 <?php
 require_once 'baza.php';
-require_once 'fpdf/fpdf.php';
+require_once 'fpdf/tfpdf.php'; // uporabi tFPDF (ne navaden FPDF)
 session_start();
 
 if (!isset($_SESSION['racunId'])) {
@@ -24,22 +24,22 @@ $stmt->bind_param("i", $racunId);
 if (!$stmt->execute()) die("Napaka pri izvajanju poizvedbe: " . $stmt->error);
 $result = $stmt->get_result();
 
-// ⬇️ Uporaba DejaVuSans za podporo UTF-8 ⬇️
-$pdf = new FPDF();
+// Generiranje PDF
+$pdf = new tFPDF();
 $pdf->AddPage();
-$pdf->AddFont('DejaVuSans', '', 'DejaVuSans.php');
-$pdf->AddFont('DejaVuSans', 'B', 'DejaVuSans-Bold.php');
 
-// Naslov
-$pdf->SetFont('DejaVuSans', 'B', 16);
+// Dodamo DejaVuSans pisavo z Unicode podporo
+$pdf->AddFont('DejaVu', '', 'DejaVuSans.ttf', true);
+$pdf->AddFont('DejaVu', 'B', 'DejaVuSans-Bold.ttf', true);
+$pdf->SetFont('DejaVu', 'B', 16);
 $pdf->Cell(0, 10, $firma, 0, 1);
-$pdf->SetFont('DejaVuSans', '', 12);
+$pdf->SetFont('DejaVu', '', 12);
 $pdf->Cell(0, 10, "Predračun št.: " . $racunId, 0, 1);
 $pdf->Cell(0, 10, "Prodajalec: " . $ime . " " . $priimek, 0, 1);
 $pdf->Ln(5);
 
 // Tabela
-$pdf->SetFont('DejaVuSans', 'B', 12);
+$pdf->SetFont('DejaVu', 'B', 12);
 $pdf->Cell(80, 10, "Artikel", 1);
 $pdf->Cell(30, 10, "Količina", 1);
 $pdf->Cell(30, 10, "Cena", 1);
@@ -47,7 +47,7 @@ $pdf->Cell(30, 10, "Skupaj", 1);
 $pdf->Ln();
 
 $skupnaCena = 0;
-$pdf->SetFont('DejaVuSans', '', 12);
+$pdf->SetFont('DejaVu', '', 12);
 while ($row = $result->fetch_assoc()) {
     $artikel = $row['ime'];
     $kolicina = $row['kolicina'];
@@ -62,13 +62,12 @@ while ($row = $result->fetch_assoc()) {
     $pdf->Ln();
 }
 
-// Skupaj
-$pdf->SetFont('DejaVuSans', 'B', 12);
+// Skupna cena
+$pdf->SetFont('DejaVu', 'B', 12);
 $pdf->Cell(140, 10, "Skupaj", 1);
 $pdf->Cell(30, 10, number_format($skupnaCena, 2) . " €", 1);
 
 // Output
-ob_clean();
-$pdf->Output("D", "racun_" . $racunId . ".pdf");
+ob_clean(); // Pomembno!
+$pdf->Output("I", "racun_" . $racunId . ".pdf");
 exit;
-?>
