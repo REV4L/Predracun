@@ -5,6 +5,7 @@ $password = "Nikola57ma!";
 $db = "nikola26_Artikli";
 
 $link = new mysqli($host, $user, $password, $db);
+$link->set_charset("utf8mb4");
 
 if ($link->connect_error) {
     die("Povezava na bazo ni uspela: " . $link->connect_error);
