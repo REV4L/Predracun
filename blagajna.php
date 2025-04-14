@@ -63,19 +63,25 @@ if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
     $stmt->bind_param("i", $racunId);
     $stmt->execute();
     $result = $stmt->get_result();
-    $skupna = 0;
+    $skupnaCena = 0;
     while ($row = $result->fetch_assoc()) {
-        $skupna += $row['cena'] * $row['kolicina'];
+        $skupnaCena += $row['cena'] * $row['kolicina'];
     }
     $stmt->close();
 
+    // Obračun popusta
+    $popust = isset($_POST['popust']) ? floatval($_POST['popust']) : 0;
+    $koncnaCena = $skupnaCena - ($skupnaCena * $popust / 100);
+
+    // Posodobitev bazo s skupno ceno, končno ceno in označitev predračuna kot izdanega
     $stmt = $link->prepare("UPDATE predracun SET izdan = 1, skupna_cena = ?, koncna_cena = ? WHERE id = ?");
-    $stmt->bind_param("ddi", $skupna, $skupna, $racunId);
+    $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
     $stmt->execute();
     $stmt->close();
     unset($_SESSION['racunId']);
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="sl">
 <head>

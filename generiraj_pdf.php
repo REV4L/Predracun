@@ -73,5 +73,5 @@ $pdf->Cell(30, 10, number_format($skupnaCena, 2) . " €", 1);
 
 // Output
 ob_clean(); // Pomembno!
-$pdf->Output("I", "racun_" . $racunId . ".pdf");
+$pdf->Output("D", "racun_" . $racunId . ".pdf");
 exit;
