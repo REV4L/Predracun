@@ -199,7 +199,7 @@ if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
             <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
         </form>
         <form action="generiraj_pdf.php" method="POST">
-            <button type="submit" class="action-btn">Izdaj račun</button>
+            <button type="submit" class="btn akcija">Izdaj račun</button>
         </form>
 
 
