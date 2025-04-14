@@ -176,10 +176,6 @@ if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
             }
         }
         ?>
-    </div>
-</div>
-
-
         <div class="kategorije">
             <h3>Kategorije</h3>
             <form method="post">
@@ -191,6 +187,11 @@ if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
                 ?>
             </form>
         </div>
+    </div>
+</div>
+
+
+
     </div>
 
     <div class="right-panel">
