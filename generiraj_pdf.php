@@ -12,6 +12,9 @@ $ime = $_SESSION['ime'] ?? 'Neznano';
 $priimek = $_SESSION['priimek'] ?? '';
 $firma = "Moja Firma d.o.o.";
 
+// Pridobivanje trenutnega datuma
+$datum = date('d.m.Y'); // Oblika: dd.mm.YYYY
+
 $query = "SELECT p.st, a.ime, a.cena, r.kolicina
           FROM predracun p
           INNER JOIN artikel_predracun r ON p.id = r.predracun_id
@@ -35,6 +38,7 @@ $pdf->SetFont('DejaVu', 'B', 16);
 $pdf->Cell(0, 10, $firma, 0, 1);
 $pdf->SetFont('DejaVu', '', 12);
 $pdf->Cell(0, 10, "Predračun št.: " . $racunId, 0, 1);
+$pdf->Cell(0, 10, "Datum: " . $datum, 0, 1); // Dodan datum
 $pdf->Cell(0, 10, "Prodajalec: " . $ime . " " . $priimek, 0, 1);
 $pdf->Ln(5);
 
