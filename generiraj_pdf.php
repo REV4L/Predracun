@@ -1,6 +1,6 @@
 <?php
 require_once 'baza.php';
-require_once 'FPDF-master/fpdf.php';
+require_once 'fpdf/fpdf.php';
 session_start();
 
 if (!isset($_SESSION['racunId'])) {
