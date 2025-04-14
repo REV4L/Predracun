@@ -24,15 +24,11 @@ $stmt->bind_param("i", $racunId);
 if (!$stmt->execute()) die("Napaka pri izvajanju poizvedbe: " . $stmt->error);
 $result = $stmt->get_result();
 
-// Generiranje PDF
+// ⬇️ Uporaba DejaVuSans za podporo UTF-8 ⬇️
 $pdf = new FPDF();
 $pdf->AddPage();
-
-// ⬇️ DODAJEMO DEJAVUSANS ⬇️
 $pdf->AddFont('DejaVuSans', '', 'DejaVuSans.php');
 $pdf->AddFont('DejaVuSans', 'B', 'DejaVuSans-Bold.php');
-$pdf->SetFont('DejaVuSans', 'B', 16); // Za naslov
-$pdf->SetFont('DejaVuSans', '', 12); // Za navaden tekst
 
 // Naslov
 $pdf->SetFont('DejaVuSans', 'B', 16);
@@ -61,18 +57,18 @@ while ($row = $result->fetch_assoc()) {
 
     $pdf->Cell(80, 10, $artikel, 1);
     $pdf->Cell(30, 10, $kolicina, 1);
-    $pdf->Cell(30, 10, number_format($cena, 2) . "€", 1);
-    $pdf->Cell(30, 10, number_format($skupaj, 2) . "€", 1);
+    $pdf->Cell(30, 10, number_format($cena, 2) . " €", 1);
+    $pdf->Cell(30, 10, number_format($skupaj, 2) . " €", 1);
     $pdf->Ln();
 }
 
-// Skupna cena
+// Skupaj
 $pdf->SetFont('DejaVuSans', 'B', 12);
 $pdf->Cell(140, 10, "Skupaj", 1);
-$pdf->Cell(30, 10, number_format($skupnaCena, 2) . "€", 1);
+$pdf->Cell(30, 10, number_format($skupnaCena, 2) . " €", 1);
 
 // Output
-ob_clean(); // Pomembno za izhod brez garbage znakov
+ob_clean();
 $pdf->Output("I", "racun_" . $racunId . ".pdf");
 exit;
 ?>
