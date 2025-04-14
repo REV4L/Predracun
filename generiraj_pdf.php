@@ -30,7 +30,9 @@ $pdf->AddPage();
 
 // ⬇️ DODAJEMO DEJAVUSANS ⬇️
 $pdf->AddFont('DejaVuSans', '', 'DejaVuSans.php');
-$pdf->SetFont('DejaVuSans', '', 12);
+$pdf->AddFont('DejaVuSans', 'B', 'DejaVuSans-Bold.php');
+$pdf->SetFont('DejaVuSans', 'B', 16); // Za naslov
+$pdf->SetFont('DejaVuSans', '', 12); // Za navaden tekst
 
 // Naslov
 $pdf->SetFont('DejaVuSans', 'B', 16);
