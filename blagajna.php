@@ -1,6 +1,5 @@
 <?php
 require_once 'baza.php';
-require_once 'generiraj_pdf.php';
 session_start();
 
 if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
@@ -133,8 +132,7 @@ if (isset($_POST['izdaja'])) {
     }
     $stmt->close();
 
-    // ✨ Zdaj lahko generiraš PDF — NA KONCU!
-    pdf();
+    header("Location: generiraj_pdf.php");
 
     unset($_SESSION['racunId']);
     exit(); // končaj tukaj, da ne izpiše nič več
