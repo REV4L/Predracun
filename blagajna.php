@@ -21,34 +21,35 @@ if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $uporabnik_id = $_SESSION['uporabnik_id'];
 
     
-// Pridobi prefix iz tabele settings
-$stmt = $link->prepare("SELECT prefix FROM settings LIMIT 1");
-$stmt->execute();
-$resprefix = $stmt->get_result();
-$prefixRow = $resprefix->fetch_assoc();
-$prefix = $prefixRow['prefix'];
-$stmt->close();
+    // Pridobi prefix iz tabele settings
+    $stmt = $link->prepare("SELECT prefix FROM settings LIMIT 1");
+    $stmt->execute();
+    $resprefix = $stmt->get_result();
+    $prefixRow = $resprefix->fetch_assoc();
+    $prefix = $prefixRow['prefix'];
+    $stmt->close();
 
-// Pridobi največjo številko računa, ki vsebuje prefix
-$stmt = $link->prepare("SELECT RIGHT(st, LENGTH(st) - ?) AS max_st FROM predracun WHERE st LIKE ? ORDER BY max_st DESC LIMIT 1");
-$stmt->bind_param("is", strlen($prefix), $prefix . '%');
-$stmt->execute();
-$result = $stmt->get_result();
-$row = $result->fetch_assoc();
-$max_st = isset($row['max_st']) ? (int)$row['max_st'] : 0;
-$stmt->close();
+    $left = strlen($prefix);
+    // Pridobi največjo številko računa
+    $stmt = $link->prepare("SELECT RIGHT(st, ?) AS max_st FROM predracun");
+    $stmt->bind_param("i", $left);
+    $stmt->execute();
+    
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $max_st = $row['max_st'] ?? 0;
+    $stmt->close();
 
-// Sestavi novo številko računa, ki poveča obstoječo za 1
-$novi_st = $prefix . str_pad(($max_st + 1), 8, '0', STR_PAD_LEFT);
+    // Sestavi novo številko računa
+    $novi_st = $prefix . str_pad(($max_st + 1), 8, '0', STR_PAD_LEFT);
 
-// Vstavi nov predračun v bazo
-$query = "INSERT INTO predracun (uporabnik_id, st, dt, izdan, skupna_cena, koncna_cena) VALUES (?, ?, NOW(), 0, 0, 0)";
-$stmt = $link->prepare($query);
-$stmt->bind_param("is", $uporabnik_id, $novi_st);
-$stmt->execute();
-$_SESSION['racunId'] = $stmt->insert_id;
-$stmt->close();
 
+    $query = "INSERT INTO predracun (uporabnik_id, st, dt, izdan, skupna_cena, koncna_cena) VALUES (?, ?, NOW(), 0, 0, 0)";
+    $stmt = $link->prepare($query);
+    $stmt->bind_param("is", $uporabnik_id, $novi_st);
+    $stmt->execute();
+    $_SESSION['racunId'] = $stmt->insert_id;
+    $stmt->close();
 }
 
 if (isset($_POST['dodaj_artikel'])) {
