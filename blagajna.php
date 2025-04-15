@@ -97,7 +97,7 @@ if (isset($_POST['izbris_artikel'])) {
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja') {
+if (isset($_POST['izdaja'])) {
     pdf();
 
     $racunId = $_SESSION['racunId'];
