@@ -25,7 +25,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     <form method="get" action="setprefix.php">
         <?php
         $qprefix = "SELECT prefix FROM settings LIMIT 1";
-        $prefix = mysqli_fetch_assoc(mysqli_query($link, $query_users))[0];
+        $prefix = mysqli_fetch_assoc(mysqli_query($link, $qprefix))[0];
 
         echo '<input name="prefix" type="text" value="' . $prefix . '">';
         ?>
