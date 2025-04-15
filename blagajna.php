@@ -258,7 +258,7 @@ if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja') {
         <form method="POST">
             <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
         </form>
-        <form action="generiraj_pdf.php" method="POST">
+        <form action="#" method="POST">
             <button type="submit" name="izdaja" class="izdaja">Izdaj račun</button>
         </form>
 
