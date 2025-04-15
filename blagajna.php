@@ -50,7 +50,7 @@ if (isset($_POST['izdaja'])) {
     }
     $stmt->close();
 
-    header("Location: generiraj_pdf.php");
+    //header("Location: generiraj_pdf.php");
 
 }
 
@@ -213,6 +213,8 @@ ini_set('display_errors', 1);
                 <label for="popust">Vnesite popust (%):</label>
                 <input type="number" name="popust" id="popust" min="0" max="100" step="0.01">
                 <button type="submit" name="uporabi_popust" class="btn akcija">Uporabi popust</button>
+                <br>
+                <a href="generiraj_pdf.php">PDF</a>
             </form>
 
             <?php
