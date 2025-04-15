@@ -20,15 +20,20 @@ echo "</div>";
 if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $uporabnik_id = $_SESSION['uporabnik_id'];
 
-    // Generiraj številko računa (npr. RAČUN-001, RAČUN-002)
     $stmt = $link->prepare("SELECT MAX(CAST(SUBSTRING(st, 8) AS UNSIGNED)) AS max_st FROM predracun");
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $novi_st = 'RAČUN-' . str_pad(($row['max_st'] + 1), 3, '0', STR_PAD_LEFT);
+    
+    $stmt = $link->prepare("SELECT prefix FROM settings LIMIT 1");
+    $stmt->execute();
+    $resprefix = $stmt->get_result();
+    $prefix = $result->fetch_assoc();
+
+    $novi_st = $prefix[0] . str_pad(($row['max_st
+    '] + 1), 5, '0', STR_PAD_LEFT);
     $stmt->close();
 
-    // Vstavi nov predračun v bazo z generirano številko
     $query = "INSERT INTO predracun (uporabnik_id, st, dt, izdan, skupna_cena, koncna_cena) VALUES (?, ?, NOW(), 0, 0, 0)";
     $stmt = $link->prepare($query);
     $stmt->bind_param("is", $uporabnik_id, $novi_st);
