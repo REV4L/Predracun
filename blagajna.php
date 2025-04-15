@@ -21,7 +21,6 @@ echo "</div>";
 if (isset($_GET["edit"])) {
     //echo "balls";
     $_SESSION['racunId'] = $_GET["edit"];
-    header("Location: blagajna.php");
 }
 
 if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
@@ -131,7 +130,7 @@ if (isset($_POST['izdaja'])) {
         die("Napaka pri izvajanju UPDATE: " . $stmt->error);
     }
     $stmt->close();
-    sleep(1);
+
     header("Location: generiraj_pdf.php");
 
     unset($_SESSION['racunId']);
