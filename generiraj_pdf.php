@@ -5,10 +5,7 @@ require_once 'tfpdf/tfpdf.php'; // uporabi tFPDF (ne navaden FPDF)
 session_start();
 
 if (!isset($_SESSION['racunId'])) {
-    die("Ni odprtega računa.");
 }
-die("DIE");
-echo "Ni odprtega računa.";
 
 $racunId = $_SESSION['racunId'];
 $ime = $_SESSION['ime'] ?? 'Neznano';
