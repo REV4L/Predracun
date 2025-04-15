@@ -20,7 +20,10 @@ echo "</div>";
 if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $uporabnik_id = $_SESSION['uporabnik_id'];
 
+
+echo "balls";
 if(isset($_GET["edit"])) {
+    echo "balls2";
     $_SESSION['racunId'] = $_GET["edit"];
     header("Location: blagajna.php");
 }
