@@ -1,10 +1,7 @@
 <?php
 require_once 'baza.php';
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'a') {
-    header("Location: prijava.php");
-    exit();
-}
+
 
 if (isset($_GET["prefix"])) {
     $p = $_GET["prefix"];
@@ -12,6 +9,6 @@ if (isset($_GET["prefix"])) {
 
     $link->prepare($query)->execute();
 
-
+    sleep(1);
     header("Location: pregled_predracunov.php");
 }
