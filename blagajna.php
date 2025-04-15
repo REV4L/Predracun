@@ -22,6 +22,7 @@ if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
 
 if(isset($_GET["edit"])) {
     $_SESSION['racunId'] = $_GET["edit"];
+    header("Location: blagajna.php");
 }
 
     
