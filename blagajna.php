@@ -96,7 +96,9 @@ if (isset($_POST['izbris_artikel'])) {
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
+if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja') {
+    pdf();
+
     $racunId = $_SESSION['racunId'];
 
     // Pridobi vse artikle in količine za ta račun
@@ -256,7 +258,7 @@ if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
             <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
         </form>
         <form action="generiraj_pdf.php" method="POST">
-            <button type="submit" class="btn akcija">Izdaj račun</button>
+            <button type="submit" name="izdaja" class="izdaja">Izdaj račun</button>
         </form>
 
 

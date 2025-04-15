@@ -19,10 +19,10 @@ if ($st > 0) {
     $_SESSION['priimek'] = $row['priimek'];
     $_SESSION['uporabnik_id'] = $row['id'];
     $_SESSION['role'] = $row['role'];
-    if($_SESSION['role'] == 'a'){
+    if ($_SESSION['role'] == 'a') {
         header("Location: https://predracun.nikola-marinkovic.eu/admin.php");
         exit();
-    }else{
+    } else {
         header("Location: https://predracun.nikola-marinkovic.eu/blagajna.php");
         exit();
     }
