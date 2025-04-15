@@ -1,5 +1,6 @@
 <?php
 require_once 'baza.php';
+require_once 'seja.php';
 require_once 'tfpdf/tfpdf.php'; // uporabi tFPDF (ne navaden FPDF)
 session_start();
 

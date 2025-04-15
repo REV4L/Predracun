@@ -6,6 +6,11 @@ if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
     header("Location: prijava.php");
     exit();
 }
+//echo "balls";
+if (isset($_GET["edit"])) {
+    //echo "balls";
+    $_SESSION['racunId'] = $_GET["edit"];
+}
 
 if (isset($_POST['izdaja'])) {
     $racunId = $_SESSION['racunId'];
@@ -59,11 +64,6 @@ if ($isAdmin) {
 }
 echo "</div>";
 
-//echo "balls";
-if (isset($_GET["edit"])) {
-    //echo "balls";
-    $_SESSION['racunId'] = $_GET["edit"];
-}
 
 if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $uporabnik_id = $_SESSION['uporabnik_id'];
