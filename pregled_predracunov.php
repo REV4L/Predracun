@@ -102,7 +102,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
             echo "<td>" . htmlspecialchars($row['skupna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['koncna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['uporabnik_ime']) . " " . htmlspecialchars($row['priimek']) . "</td>";
-            echo '<td> <a href="blaganja.php?edit=' . $row['id']. '">Uredi</a></td>';
+            echo '<td> <a href="blagajna.php?edit=' . $row['id']. '">Uredi</a></td>';
             echo "</tr>";
         }
 
