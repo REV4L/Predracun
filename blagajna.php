@@ -98,8 +98,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if (isset($_POST['izdaja'])) {
-    pdf();
-
     $racunId = $_SESSION['racunId'];
 
     // Pridobi vse artikle in količine za ta račun
@@ -121,27 +119,27 @@ if (isset($_POST['izdaja'])) {
     }
     $stmt->close();
 
-    // Obračun popusta
     $popust = isset($_POST['popust']) ? floatval($_POST['popust']) : 0;
     $koncnaCena = $skupnaCena - ($skupnaCena * $popust / 100);
 
-    // Posodobi račun
     $stmt = $link->prepare("UPDATE predracun SET izdan = 1, skupna_cena = ?, koncna_cena = ? WHERE id = ?");
     if (!$stmt) {
         die("Napaka pri pripravi UPDATE poizvedbe: " . $link->error);
     }
 
     $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
-
-    echo $skupnaCena . $koncnaCena . $racunId;
-    exit();
     if (!$stmt->execute()) {
         die("Napaka pri izvajanju UPDATE: " . $stmt->error);
     }
     $stmt->close();
 
+    // ✨ Zdaj lahko generiraš PDF — NA KONCU!
+    pdf();
+
     unset($_SESSION['racunId']);
+    exit(); // končaj tukaj, da ne izpiše nič več
 }
+
 ?>
 
 <!DOCTYPE html>
