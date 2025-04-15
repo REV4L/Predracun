@@ -24,9 +24,9 @@ $currentYear = date("Y");
 
 // Pridobi največjo številko računa za trenutno leto
 $stmt = $link->prepare("
-    SELECT MAX(CAST(SUBSTRING_INDEX(st, '/', -1) AS UNSIGNED)) AS max_st 
+    SELECT MAX(CAST(SUBSTRING_INDEX(st, '-', -1) AS UNSIGNED)) AS max_st 
     FROM predracun 
-    WHERE st LIKE CONCAT(?, '/%')
+    WHERE st LIKE CONCAT(?, '-%')
 ");
 $yearPrefix = $currentYear;
 $stmt->bind_param("s", $yearPrefix);
@@ -44,7 +44,7 @@ $prefixRow = $resprefix->fetch_assoc();
 $stmt->close();
 
 // Nastavi prefix (če ga ni v bazi, uporabi leto/)
-$prefix = $prefixRow['prefix'] ?? ($currentYear . '/');
+$prefix = $prefixRow['prefix'] ?? ($currentYear . '-');
 
 // Sestavi novo številko računa
 $novi_st = $prefix . str_pad(($max_st + 1), 6, '0', STR_PAD_LEFT);
