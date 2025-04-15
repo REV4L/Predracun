@@ -7,6 +7,48 @@ if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
     exit();
 }
 
+if (isset($_POST['izdaja'])) {
+    $racunId = $_SESSION['racunId'];
+
+    // Pridobi vse artikle in količine za ta račun
+    $query = "SELECT a.cena, r.kolicina FROM artikli a 
+              INNER JOIN artikel_predracun r ON a.id = r.artikel_id 
+              WHERE r.predracun_id = ?";
+    $stmt = $link->prepare($query);
+    if (!$stmt) {
+        die("Napaka pri pripravi poizvedbe: " . $link->error);
+    }
+
+    $stmt->bind_param("i", $racunId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $skupnaCena = 0;
+    while ($row = $result->fetch_assoc()) {
+        $skupnaCena += $row['cena'] * $row['kolicina'];
+    }
+    $stmt->close();
+
+    $popust = isset($_POST['popust']) ? floatval($_POST['popust']) : 0;
+    $koncnaCena = $skupnaCena - ($skupnaCena * $popust / 100);
+
+    $stmt = $link->prepare("UPDATE predracun SET izdan = 1, skupna_cena = ?, koncna_cena = ? WHERE id = ?");
+    if (!$stmt) {
+        die("Napaka pri pripravi UPDATE poizvedbe: " . $link->error);
+    }
+
+    $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
+    if (!$stmt->execute()) {
+        die("Napaka pri izvajanju UPDATE: " . $stmt->error);
+    }
+    $stmt->close();
+
+    header("Location: generiraj_pdf.php");
+
+    unset($_SESSION['racunId']);
+    exit(); // končaj tukaj, da ne izpiše nič več
+}
+
 $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'a';
 
 echo "<div class='pozdrav'>Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'] . "<br>";
@@ -95,47 +137,7 @@ if (isset($_POST['izbris_artikel'])) {
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (isset($_POST['izdaja'])) {
-    $racunId = $_SESSION['racunId'];
 
-    // Pridobi vse artikle in količine za ta račun
-    $query = "SELECT a.cena, r.kolicina FROM artikli a 
-              INNER JOIN artikel_predracun r ON a.id = r.artikel_id 
-              WHERE r.predracun_id = ?";
-    $stmt = $link->prepare($query);
-    if (!$stmt) {
-        die("Napaka pri pripravi poizvedbe: " . $link->error);
-    }
-
-    $stmt->bind_param("i", $racunId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $skupnaCena = 0;
-    while ($row = $result->fetch_assoc()) {
-        $skupnaCena += $row['cena'] * $row['kolicina'];
-    }
-    $stmt->close();
-
-    $popust = isset($_POST['popust']) ? floatval($_POST['popust']) : 0;
-    $koncnaCena = $skupnaCena - ($skupnaCena * $popust / 100);
-
-    $stmt = $link->prepare("UPDATE predracun SET izdan = 1, skupna_cena = ?, koncna_cena = ? WHERE id = ?");
-    if (!$stmt) {
-        die("Napaka pri pripravi UPDATE poizvedbe: " . $link->error);
-    }
-
-    $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
-    if (!$stmt->execute()) {
-        die("Napaka pri izvajanju UPDATE: " . $stmt->error);
-    }
-    $stmt->close();
-
-    header("Location: generiraj_pdf.php");
-
-    unset($_SESSION['racunId']);
-    exit(); // končaj tukaj, da ne izpiše nič več
-}
 
 ?>
 
