@@ -131,7 +131,7 @@ if (isset($_POST['izdaja'])) {
         die("Napaka pri izvajanju UPDATE: " . $stmt->error);
     }
     $stmt->close();
-
+    sleep(1);
     header("Location: generiraj_pdf.php");
 
     unset($_SESSION['racunId']);
