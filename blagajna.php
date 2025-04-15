@@ -52,7 +52,6 @@ if (isset($_POST['izdaja'])) {
 
     header("Location: generiraj_pdf.php");
 
-    exit(); // končaj tukaj, da ne izpiše nič več
 }
 
 $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'a';

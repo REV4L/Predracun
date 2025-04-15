@@ -7,6 +7,7 @@ session_start();
 if (!isset($_SESSION['racunId'])) {
     die("Ni odprtega računa.");
 }
+echo "Ni odprtega računa.";
 
 $racunId = $_SESSION['racunId'];
 $ime = $_SESSION['ime'] ?? 'Neznano';
