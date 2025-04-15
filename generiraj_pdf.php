@@ -3,13 +3,15 @@ require_once 'baza.php';
 require_once 'tfpdf/tfpdf.php'; // uporabi tFPDF (ne navaden FPDF)
 session_start();
 
-if (!isset($_SESSION['racunId'])) {
-    die("Ni odprtega računa.");
-}
+
 
 function pdf()
 {
     global $link;
+
+    if (!isset($_SESSION['racunId'])) {
+        die("Ni odprtega računa.");
+    }
 
     $racunId = $_SESSION['racunId'];
     $ime = $_SESSION['ime'] ?? 'Neznano';

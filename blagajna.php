@@ -1,5 +1,6 @@
 <?php
 require_once 'baza.php';
+require_once 'generiraj_pdf.php';
 session_start();
 
 if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
