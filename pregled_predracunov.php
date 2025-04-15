@@ -44,7 +44,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     </form>
 
     <?php
-    $query = "SELECT p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena, u.ime AS uporabnik_ime, u.priimek
+    $query = "SELECT p.id, p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena, u.ime AS uporabnik_ime, u.priimek
               FROM predracun p
               JOIN uporabniki u ON p.uporabnik_id = u.id";
     
@@ -102,6 +102,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
             echo "<td>" . htmlspecialchars($row['skupna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['koncna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['uporabnik_ime']) . " " . htmlspecialchars($row['priimek']) . "</td>";
+            echo '<td> <a href="blaganja.php?edit=' . $row['id']. '"</td>';
             echo "</tr>";
         }
 

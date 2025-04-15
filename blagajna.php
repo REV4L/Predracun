@@ -20,6 +20,10 @@ echo "</div>";
 if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $uporabnik_id = $_SESSION['uporabnik_id'];
 
+if(isset($_GET["edit"])) {
+    $_SESSION['racunId'] = $_GET["edit"];
+}
+
     
 // Pridobi prefix iz tabele settings
 $stmt = $link->prepare("SELECT prefix FROM settings LIMIT 1");
