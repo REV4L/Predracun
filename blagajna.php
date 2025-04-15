@@ -10,6 +10,8 @@ if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
 if (isset($_GET["edit"])) {
     //echo "balls";
     $_SESSION['racunId'] = $_GET["edit"];
+
+    echo $_SESSION['racunId'];
 }
 
 if (isset($_POST['izdaja'])) {
@@ -50,7 +52,6 @@ if (isset($_POST['izdaja'])) {
 
     header("Location: generiraj_pdf.php");
 
-    unset($_SESSION['racunId']);
     exit(); // končaj tukaj, da ne izpiše nič več
 }
 
