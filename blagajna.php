@@ -19,9 +19,17 @@ echo "</div>";
 
 if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $uporabnik_id = $_SESSION['uporabnik_id'];
+// Pridobi trenutno leto
+$currentYear = date("Y");
 
-    // Pridobi največjo številko računa
-$stmt = $link->prepare("SELECT MAX(CAST(SUBSTRING(st, 6) AS UNSIGNED)) AS max_st FROM predracun");
+// Pridobi največjo številko računa za trenutno leto
+$stmt = $link->prepare("
+    SELECT MAX(CAST(SUBSTRING_INDEX(st, '/', -1) AS UNSIGNED)) AS max_st 
+    FROM predracun 
+    WHERE st LIKE CONCAT(?, '/%')
+");
+$yearPrefix = $currentYear;
+$stmt->bind_param("s", $yearPrefix);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
@@ -33,12 +41,13 @@ $stmt = $link->prepare("SELECT prefix FROM settings LIMIT 1");
 $stmt->execute();
 $resprefix = $stmt->get_result();
 $prefixRow = $resprefix->fetch_assoc();
-$prefix = $prefixRow['prefix'] ?? date("Y") . '/';
 $stmt->close();
+
+// Nastavi prefix (če ga ni v bazi, uporabi leto/)
+$prefix = $prefixRow['prefix'] ?? ($currentYear . '/');
 
 // Sestavi novo številko računa
 $novi_st = $prefix . str_pad(($max_st + 1), 6, '0', STR_PAD_LEFT);
-
 
     $query = "INSERT INTO predracun (uporabnik_id, st, dt, izdan, skupna_cena, koncna_cena) VALUES (?, ?, NOW(), 0, 0, 0)";
     $stmt = $link->prepare($query);
