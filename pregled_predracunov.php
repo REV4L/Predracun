@@ -11,13 +11,26 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 ?>
 <!DOCTYPE html>
 <html lang="sl">
+
 <head>
     <meta charset="UTF-8">
     <title>Izpis predračunov</title>
     <link rel="stylesheet" href="izpis.css">
 </head>
+
 <body>
     <h1>Izpis predračunov</h1>
+
+
+    <form method="get" action="prefix.php">
+        <?php
+        $qprefix = "SELECT prefix FROM settings LIMIT 1";
+        $prefix = mysqli_fetch_assoc(mysqli_query($link, $query_users))[0];
+
+        echo '<input name="prefix" type="text" value="' . $prefix . '">';
+        ?>
+        <input name="sub" type="submit" value="sub">
+    </form>
 
     <form method="post" action="">
         Uporabnik:
@@ -47,7 +60,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     $query = "SELECT p.id, p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena, u.ime AS uporabnik_ime, u.priimek
               FROM predracun p
               JOIN uporabniki u ON p.uporabnik_id = u.id";
-    
+
     $conditions = [];
     $params = [];
     $types = "";
@@ -102,7 +115,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
             echo "<td>" . htmlspecialchars($row['skupna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['koncna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['uporabnik_ime']) . " " . htmlspecialchars($row['priimek']) . "</td>";
-            echo '<td> <a href="blagajna.php?edit=' . $row['id']. '">Uredi</a></td>';
+            echo '<td> <a href="blagajna.php?edit=' . $row['id'] . '">Uredi</a></td>';
             echo "</tr>";
         }
 
@@ -118,4 +131,5 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     <br>
     <a href='admin.php'>Nazaj</a>
 </body>
+
 </html>
