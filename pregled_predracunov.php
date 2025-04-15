@@ -22,7 +22,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     <h1>Izpis predračunov</h1>
 
 
-    <form method="get" action="prefix.php">
+    <form method="get" action="setprefix.php">
         <?php
         $qprefix = "SELECT prefix FROM settings LIMIT 1";
         $prefix = mysqli_fetch_assoc(mysqli_query($link, $query_users))[0];
