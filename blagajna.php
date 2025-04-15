@@ -17,16 +17,16 @@ if ($isAdmin) {
 }
 echo "</div>";
 
-if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
-    $uporabnik_id = $_SESSION['uporabnik_id'];
-
-
 echo "balls";
 if(isset($_GET["edit"])) {
-    echo "balls2";
+    echo "balls";
     $_SESSION['racunId'] = $_GET["edit"];
     header("Location: blagajna.php");
 }
+
+if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
+    $uporabnik_id = $_SESSION['uporabnik_id'];
+
 
     
 // Pridobi prefix iz tabele settings
