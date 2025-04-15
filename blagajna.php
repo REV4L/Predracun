@@ -129,6 +129,9 @@ if (isset($_POST['izdaja']) && $_POST['izdaja'] == 'izdaja_racuna') {
     }
 
     $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
+
+    echo $skupnaCena . $koncnaCena . $racunId;
+    exit();
     if (!$stmt->execute()) {
         die("Napaka pri izvajanju UPDATE: " . $stmt->error);
     }
