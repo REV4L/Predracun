@@ -25,12 +25,15 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     <form method="get" action="setprefix.php">
         <?php
         $qprefix = "SELECT prefix FROM settings LIMIT 1";
-        $prefix = mysqli_fetch_assoc(mysqli_query($link, $qprefix))[0];
+        $result = mysqli_query($link, $qprefix);
+        $row = mysqli_fetch_assoc($result);
+        $prefix = $row['prefix'];
 
-        echo '<input name="prefix" type="text" value="' . $prefix . '">';
+        echo '<input name="prefix" type="text" value="' . htmlspecialchars($prefix) . '">';
         ?>
         <input name="sub" type="submit" value="sub">
     </form>
+
 
     <form method="post" action="">
         Uporabnik:
