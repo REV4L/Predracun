@@ -8,6 +8,12 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'a') {
 }
 
 echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
+$query = "SELECT p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena, 
+u.ime AS prodajalec_ime, u.priimek AS prodajalec_priimek,
+p.ime_kupca, p.priimek_kupca
+FROM predracun p
+JOIN uporabniki u ON p.uporabnik_id = u.id
+WHERE u.ime = ? AND u.priimek = ?";
 ?>
 <!DOCTYPE html>
 <html lang="sl">
