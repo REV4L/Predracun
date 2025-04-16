@@ -209,11 +209,18 @@ ini_set('display_errors', 1);
             <h4>Skupni znesek: <span id="skupni-znesek"><?php echo number_format($skupnaCena, 2); ?></span> €</h4>
 
             <!-- Obrazec za popust -->
-            <form method="POST" class="popust-form">
-                <label for="popust">Vnesite popust (%):</label>
-                <input type="number" name="popust" id="popust" min="0" max="100" step="0.01">
-                <button type="submit" name="uporabi_popust" class="btn akcija">Uporabi popust</button>
-                <br>
+            <form method="POST">
+                <label for="ime_kupca">Ime kupca:</label>
+                <input type="text" name="ime_kupca" id="ime_kupca" required><br>
+
+                <label for="priimek_kupca">Priimek kupca:</label>
+                <input type="text" name="priimek_kupca" id="priimek_kupca" required><br>
+
+                <label for="popust">Popust (%):</label>
+                <input type="number" name="popust" id="popust" min="0" max="100" step="1"><br>
+
+                <button type="submit" name="izdaja" class="btn action">Izdaj račun</button>
+
                 <a href="generiraj_pdf.php">PDF</a>
             </form>
 
