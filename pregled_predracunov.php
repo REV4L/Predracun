@@ -118,7 +118,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
             echo "<td>" . htmlspecialchars($row['skupna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['koncna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['uporabnik_ime']) . " " . htmlspecialchars($row['priimek']) . "</td>";
-            echo '<td> <a href="blagajna.php?edit=' . $row['id'] . '">Uredi</a></td>';
+            echo '<td><a href="blagajna.php?edit=' . $row['id'] . '" style="background-color: #d0e7ff; padding: 5px 10px; text-decoration: none; color: black; border-radius: 4px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor=\'#a3d2ff\'" onmouseout="this.style.backgroundColor=\'#d0e7ff\'">Uredi</a></td>';
             echo "</tr>";
         }
 
