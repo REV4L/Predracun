@@ -11,11 +11,13 @@ echo "Prijavljeni ste kot " . htmlspecialchars($_SESSION['ime']) . " " . htmlspe
 ?>
 <!DOCTYPE html>
 <html lang="sl">
+
 <head>
     <meta charset="UTF-8">
     <title>Moji predračuni</title>
     <link rel="stylesheet" href="izpis.css">
 </head>
+
 <body>
     <h1>Moji predračuni</h1>
 
@@ -30,11 +32,12 @@ echo "Prijavljeni ste kot " . htmlspecialchars($_SESSION['ime']) . " " . htmlspe
     </form>
 
     <?php
-    $query = "SELECT p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena
+    $query = "SELECT p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena, 
+                     u.ime AS prodajalec_ime, u.priimek AS prodajalec_priimek,
+                     p.ime_kupca, p.priimek_kupca
               FROM predracun p
-              WHERE p.uporabnik_id = (
-                  SELECT id FROM uporabniki WHERE ime = ? AND priimek = ?
-              )";
+              JOIN uporabniki u ON p.uporabnik_id = u.id
+              WHERE u.ime = ? AND u.priimek = ?";
 
     $params = [$_SESSION['ime'], $_SESSION['priimek']];
     $types = "ss";
@@ -72,16 +75,22 @@ echo "Prijavljeni ste kot " . htmlspecialchars($_SESSION['ime']) . " " . htmlspe
                 <th>Izdan</th>
                 <th>Skupna cena</th>
                 <th>Končna cena</th>
+                <th>Prodajalec</th>
+                <th>Kupec</th>
               </tr>';
 
         while ($row = mysqli_fetch_assoc($result)) {
             $izdan = $row['izdan'] ? 'Da' : 'Ne';
+            $prodajalec = htmlspecialchars($row['prodajalec_ime']) . " " . htmlspecialchars($row['prodajalec_priimek']);
+            $kupec = htmlspecialchars($row['ime_kupca']) . " " . htmlspecialchars($row['priimek_kupca']);
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['st']) . "</td>";
             echo "<td>" . htmlspecialchars($row['dt']) . "</td>";
             echo "<td>" . $izdan . "</td>";
             echo "<td>" . htmlspecialchars($row['skupna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['koncna_cena']) . " €</td>";
+            echo "<td>" . $prodajalec . "</td>";
+            echo "<td>" . $kupec . "</td>";
             echo "</tr>";
         }
 
@@ -97,4 +106,5 @@ echo "Prijavljeni ste kot " . htmlspecialchars($_SESSION['ime']) . " " . htmlspe
     <br>
     <a href='blagajna.php'>Nazaj</a>
 </body>
+
 </html>
