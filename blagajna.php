@@ -215,12 +215,28 @@ ini_set('display_errors', 1);
         </div>
 
         <div class="right-panel">
+            <?php
+            $imeKupca = '';
+            $priimekKupca = '';
+
+            if (isset($_SESSION['racunId'])) {
+                $stmt = $link->prepare("SELECT ime_kupca, priimek_kupca FROM predracun WHERE id = ?");
+                $stmt->bind_param("i", $_SESSION['racunId']);
+                $stmt->execute();
+                $stmt->bind_result($imeKupca, $priimekKupca);
+                $stmt->fetch();
+                $stmt->close();
+            }
+            ?>
             <form method="POST">
                 <h4>Ustvari nov račun</h4>
-                <input type="text" name="ime_kupca" placeholder="Ime kupca" required>
-                <input type="text" name="priimek_kupca" placeholder="Priimek kupca" required>
+                <input type="text" name="ime_kupca" placeholder="Ime kupca"
+                    value="<?php echo htmlspecialchars($imeKupca); ?>" required>
+                <input type="text" name="priimek_kupca" placeholder="Priimek kupca"
+                    value="<?php echo htmlspecialchars($priimekKupca); ?>" required>
                 <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
             </form>
+
 
             <form action="#" method="POST">
                 <button type="submit" name="izdaja" class="izdaja">Izdaj račun</button>
