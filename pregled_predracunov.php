@@ -111,6 +111,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
 
         while ($row = mysqli_fetch_assoc($result)) {
             $izdan = $row['izdan'] ? 'Da' : 'Ne';
+            $kupec = htmlspecialchars($row['ime_kupca']) . " " . htmlspecialchars($row['priimek_kupca']);
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['st']) . "</td>";
             echo "<td>" . htmlspecialchars($row['dt']) . "</td>";
@@ -118,6 +119,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
             echo "<td>" . htmlspecialchars($row['skupna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['koncna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['uporabnik_ime']) . " " . htmlspecialchars($row['priimek']) . "</td>";
+            echo "<td>" . $kupec . "</td>";
             echo '<td><a href="blagajna.php?edit=' . $row['id'] . '" style="background-color: #d0e7ff; padding: 5px 10px; text-decoration: none; color: black; border-radius: 4px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor=\'#a3d2ff\'" onmouseout="this.style.backgroundColor=\'#d0e7ff\'">Uredi</a></td>';
             echo "</tr>";
         }

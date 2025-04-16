@@ -93,6 +93,6 @@ $pdf->Cell(140, 10, "Končna cena", 1);
 $pdf->Cell(30, 10, number_format($koncnaCena, 2) . " €", 1);
 
 ob_clean();
-$pdf->Output("D", "racun_" . $stevilka . ".pdf");
+$pdf->Output("D", "predracun-" . $stevilka . ".pdf");
 
 exit();

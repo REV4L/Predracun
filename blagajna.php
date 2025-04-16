@@ -42,7 +42,7 @@ $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'a';
 echo "<div class='pozdrav'>Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'] . "<br>";
 echo "<a href='odjava.php'>Odjava</a> | <a href='pregled_predracunov_uporabnik.php'>Moji predračuni</a>";
 if ($isAdmin) {
-    echo " | <a href='admin.php'>Nazaj na admin panel</a>";
+    echo " | <a href='admin.php'>Nazaj na admin meni</a>";
 }
 echo "</div>";
 
