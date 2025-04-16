@@ -6,26 +6,18 @@ if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
     header("Location: prijava.php");
     exit();
 }
-//echo "balls";
-if (isset($_GET["edit"])) {
-    //echo "balls";
-    $_SESSION['racunId'] = $_GET["edit"];
 
-    echo $_SESSION['racunId'];
+if (isset($_GET["edit"])) {
+    $_SESSION['racunId'] = $_GET["edit"];
 }
 
 if (isset($_POST['izdaja'])) {
     $racunId = $_SESSION['racunId'];
 
-    // Pridobi vse artikle in količine za ta račun
     $query = "SELECT a.cena, r.kolicina FROM artikli a 
               INNER JOIN artikel_predracun r ON a.id = r.artikel_id 
               WHERE r.predracun_id = ?";
     $stmt = $link->prepare($query);
-    if (!$stmt) {
-        die("Napaka pri pripravi poizvedbe: " . $link->error);
-    }
-
     $stmt->bind_param("i", $racunId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -40,37 +32,25 @@ if (isset($_POST['izdaja'])) {
     $koncnaCena = $skupnaCena - ($skupnaCena * $popust / 100);
 
     $stmt = $link->prepare("UPDATE predracun SET izdan = 1, skupna_cena = ?, koncna_cena = ? WHERE id = ?");
-    if (!$stmt) {
-        die("Napaka pri pripravi UPDATE poizvedbe: " . $link->error);
-    }
-
     $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
-    if (!$stmt->execute()) {
-        die("Napaka pri izvajanju UPDATE: " . $stmt->error);
-    }
+    $stmt->execute();
     $stmt->close();
-
-    //header("Location: generiraj_pdf.php");
-
 }
 
 $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'a';
 
 echo "<div class='pozdrav'>Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'] . "<br>";
-echo "<a href='odjava.php'>Odjava</a>";
-echo " | <a href='pregled_predracunov_uporabnik.php'>Moji predračuni</a>";
+echo "<a href='odjava.php'>Odjava</a> | <a href='pregled_predracunov_uporabnik.php'>Moji predračuni</a>";
 if ($isAdmin) {
     echo " | <a href='admin.php'>Nazaj na admin panel</a>";
 }
 echo "</div>";
 
-
 if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $uporabnik_id = $_SESSION['uporabnik_id'];
+    $ime_kupca = $_POST['ime_kupca'] ?? '';
+    $priimek_kupca = $_POST['priimek_kupca'] ?? '';
 
-
-
-    // Pridobi prefix iz tabele settings
     $stmt = $link->prepare("SELECT prefix FROM settings LIMIT 1");
     $stmt->execute();
     $resprefix = $stmt->get_result();
@@ -79,14 +59,8 @@ if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $stmt->close();
 
     $prefixLength = strlen($prefix);
-
-    // Pridobi največjo številko računa z danim prefixom
-    $stmt = $link->prepare("
-        SELECT MAX(CAST(SUBSTRING(st, ?) AS UNSIGNED)) AS max_st 
-        FROM predracun 
-        WHERE st LIKE CONCAT(?, '%')
-    ");
-    $startPos = $prefixLength + 1; // pozicija za SUBSTRING (1-based)
+    $stmt = $link->prepare("SELECT MAX(CAST(SUBSTRING(st, ?) AS UNSIGNED)) AS max_st FROM predracun WHERE st LIKE CONCAT(?, '%')");
+    $startPos = $prefixLength + 1;
     $stmt->bind_param("is", $startPos, $prefix);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -94,17 +68,14 @@ if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $max_st = isset($row['max_st']) ? (int) $row['max_st'] : 0;
     $stmt->close();
 
-    // Sestavi novo številko računa
     $novi_st = $prefix . str_pad($max_st + 1, 8, '0', STR_PAD_LEFT);
 
-    // Vstavi nov predračun
-    $query = "INSERT INTO predracun (uporabnik_id, st, dt, izdan, skupna_cena, koncna_cena) VALUES (?, ?, NOW(), 0, 0, 0)";
+    $query = "INSERT INTO predracun (uporabnik_id, st, dt, izdan, skupna_cena, koncna_cena, ime_kupca, priimek_kupca) VALUES (?, ?, NOW(), 0, 0, 0, ?, ?)";
     $stmt = $link->prepare($query);
-    $stmt->bind_param("is", $uporabnik_id, $novi_st);
+    $stmt->bind_param("isss", $uporabnik_id, $novi_st, $ime_kupca, $priimek_kupca);
     $stmt->execute();
     $_SESSION['racunId'] = $stmt->insert_id;
     $stmt->close();
-
 }
 
 if (isset($_POST['dodaj_artikel'])) {
@@ -136,9 +107,6 @@ if (isset($_POST['izbris_artikel'])) {
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -153,7 +121,6 @@ ini_set('display_errors', 1);
 <body>
     <div class="container">
         <div class="left-panel">
-            <!-- Obstoječa koda za izpis predračuna -->
             <h3>Izpis predračuna</h3>
             <table>
                 <thead>
@@ -171,9 +138,9 @@ ini_set('display_errors', 1);
                     if (isset($_SESSION['racunId'])) {
                         $racunId = $_SESSION['racunId'];
                         $query = "SELECT r.id as artikel_predracun_id, a.ime, a.cena, r.kolicina
-                              FROM artikli a
-                              INNER JOIN artikel_predracun r ON a.id = r.artikel_id
-                              WHERE r.predracun_id = ?";
+                                  FROM artikli a
+                                  INNER JOIN artikel_predracun r ON a.id = r.artikel_id
+                                  WHERE r.predracun_id = ?";
                         $stmt = $link->prepare($query);
                         $stmt->bind_param("i", $racunId);
                         $stmt->execute();
@@ -205,27 +172,17 @@ ini_set('display_errors', 1);
                     ?>
                 </tbody>
             </table>
-
             <h4>Skupni znesek: <span id="skupni-znesek"><?php echo number_format($skupnaCena, 2); ?></span> €</h4>
 
-            <!-- Obrazec za popust -->
-            <form method="POST">
-                <label for="ime_kupca">Ime kupca:</label>
-                <input type="text" name="ime_kupca" id="ime_kupca" required><br>
-
-                <label for="priimek_kupca">Priimek kupca:</label>
-                <input type="text" name="priimek_kupca" id="priimek_kupca" required><br>
-
-                <label for="popust">Popust (%):</label>
-                <input type="number" name="popust" id="popust" min="0" max="100" step="1"><br>
-
-                <button type="submit" name="izdaja" class="btn action">Izdaj račun</button>
-
+            <form method="POST" class="popust-form">
+                <label for="popust">Vnesite popust (%):</label>
+                <input type="number" name="popust" id="popust" min="0" max="100" step="0.01">
+                <button type="submit" name="uporabi_popust" class="btn akcija">Uporabi popust</button>
+                <br>
                 <a href="generiraj_pdf.php">PDF</a>
             </form>
 
             <?php
-            // Preveri, ali je bil popust uporabljen
             if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
                 $popust = floatval($_POST['popust']);
                 if ($popust > 0 && $popust <= 100) {
@@ -233,8 +190,9 @@ ini_set('display_errors', 1);
                     echo "<h4>Popust: {$popust}%</h4>";
                     echo "<h4>Nova cena po popustu: " . number_format($novaCena, 2) . " €</h4>";
 
-                    // Posodobi ceno v bazi
                     $racunId = $_SESSION['racunId'];
+                    $stmt = $link->prepare("UPDATE predracun SET skupna_cena = ? WHERE id = ?");
+                    $stmt->bind_param("id", $skupnaCena, $racunId);
                     $stmt = $link->prepare("UPDATE predracun SET koncna_cena = ? WHERE id = ?");
                     $stmt->bind_param("di", $novaCena, $racunId);
                     $stmt->execute();
@@ -242,6 +200,7 @@ ini_set('display_errors', 1);
                 }
             }
             ?>
+
             <div class="kategorije">
                 <h3>Kategorije</h3>
                 <form method="post">
@@ -254,48 +213,46 @@ ini_set('display_errors', 1);
                 </form>
             </div>
         </div>
-    </div>
 
+        <div class="right-panel">
+            <form method="POST">
+                <h4>Ustvari nov račun</h4>
+                <input type="text" name="ime_kupca" placeholder="Ime kupca" required>
+                <input type="text" name="priimek_kupca" placeholder="Priimek kupca" required>
+                <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
+            </form>
 
+            <form action="#" method="POST">
+                <button type="submit" name="izdaja" class="izdaja">Izdaj račun</button>
+            </form>
 
-    </div>
+            <?php
+            if (isset($_POST['kategorija_id'])) {
+                $kategorija_id = $_POST['kategorija_id'];
+                $query = "SELECT * FROM artikli WHERE kategorija_id = ?";
+                $stmt = $link->prepare($query);
+                $stmt->bind_param("i", $kategorija_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
-    <div class="right-panel">
-        <form method="POST">
-            <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
-        </form>
-        <form action="#" method="POST">
-            <button type="submit" name="izdaja" class="izdaja">Izdaj račun</button>
-        </form>
-
-
-        <?php
-        if (isset($_POST['kategorija_id'])) {
-            $kategorija_id = $_POST['kategorija_id'];
-            $query = "SELECT * FROM artikli WHERE kategorija_id = ?";
-            $stmt = $link->prepare($query);
-            $stmt->bind_param("i", $kategorija_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            echo "<h4>Izdelki:</h4><table>";
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($row['ime']) . "</td>";
-                echo "<td>" . number_format($row['cena'], 2) . " €</td>";
-                echo "<td>
-                        <form method='post'>
-                            <input type='hidden' name='artikel_id' value='{$row['id']}'>
-                            <button type='submit' name='dodaj_artikel'>Dodaj</button>
-                        </form>
-                      </td>";
-                echo "</tr>";
+                echo "<h4>Izdelki:</h4><table>";
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($row['ime']) . "</td>";
+                    echo "<td>" . number_format($row['cena'], 2) . " €</td>";
+                    echo "<td>
+                            <form method='post'>
+                                <input type='hidden' name='artikel_id' value='{$row['id']}'>
+                                <button type='submit' name='dodaj_artikel'>Dodaj</button>
+                            </form>
+                          </td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+                $stmt->close();
             }
-            echo "</table>";
-            $stmt->close();
-        }
-        ?>
-    </div>
+            ?>
+        </div>
     </div>
 </body>
 
