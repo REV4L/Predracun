@@ -8,12 +8,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'a') {
 }
 
 echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
-$query = "SELECT p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena, 
-u.ime AS prodajalec_ime, u.priimek AS prodajalec_priimek,
-p.ime_kupca, p.priimek_kupca
-FROM predracun p
-JOIN uporabniki u ON p.uporabnik_id = u.id
-WHERE u.ime = ? AND u.priimek = ?";
 ?>
 <!DOCTYPE html>
 <html lang="sl">
@@ -27,7 +21,6 @@ WHERE u.ime = ? AND u.priimek = ?";
 <body>
     <h1>Izpis predračunov</h1>
 
-
     <form method="get" action="setprefix.php">
         <?php
         $qprefix = "SELECT prefix FROM settings LIMIT 1";
@@ -37,9 +30,8 @@ WHERE u.ime = ? AND u.priimek = ?";
 
         echo '<input name="prefix" type="text" value="' . htmlspecialchars($prefix) . '">';
         ?>
-        <input name="sub" type="submit" value="sub">
+        <input name="sub" type="submit" value="Shrani">
     </form>
-
 
     <form method="post" action="">
         Uporabnik:
@@ -66,7 +58,9 @@ WHERE u.ime = ? AND u.priimek = ?";
     </form>
 
     <?php
-    $query = "SELECT p.id, p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena, u.ime AS uporabnik_ime, u.priimek
+    $query = "SELECT p.id, p.st, p.dt, p.izdan, p.skupna_cena, p.koncna_cena, 
+                     u.ime AS uporabnik_ime, u.priimek,
+                     p.ime_kupca, p.priimek_kupca
               FROM predracun p
               JOIN uporabniki u ON p.uporabnik_id = u.id";
 
@@ -112,19 +106,23 @@ WHERE u.ime = ? AND u.priimek = ?";
                 <th>Izdan</th>
                 <th>Skupna cena</th>
                 <th>Končna cena</th>
-                <th>Uporabnik ime</th>
+                <th>Prodajalec</th>
+                <th>Kupec</th>
+                <th>Uredi</th>
               </tr>';
 
         while ($row = mysqli_fetch_assoc($result)) {
             $izdan = $row['izdan'] ? 'Da' : 'Ne';
+            $prodajalec = htmlspecialchars($row['uporabnik_ime']) . " " . htmlspecialchars($row['priimek']);
             $kupec = htmlspecialchars($row['ime_kupca']) . " " . htmlspecialchars($row['priimek_kupca']);
+
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['st']) . "</td>";
             echo "<td>" . htmlspecialchars($row['dt']) . "</td>";
             echo "<td>" . $izdan . "</td>";
             echo "<td>" . htmlspecialchars($row['skupna_cena']) . " €</td>";
             echo "<td>" . htmlspecialchars($row['koncna_cena']) . " €</td>";
-            echo "<td>" . htmlspecialchars($row['uporabnik_ime']) . " " . htmlspecialchars($row['priimek']) . "</td>";
+            echo "<td>" . $prodajalec . "</td>";
             echo "<td>" . $kupec . "</td>";
             echo '<td><a href="blagajna.php?edit=' . $row['id'] . '" style="background-color: #d0e7ff; padding: 5px 10px; text-decoration: none; color: black; border-radius: 4px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor=\'#a3d2ff\'" onmouseout="this.style.backgroundColor=\'#d0e7ff\'">Uredi</a></td>';
             echo "</tr>";
