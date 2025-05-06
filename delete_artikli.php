@@ -21,6 +21,7 @@ if ($stmt->execute()) {
     exit();
 } else {
     echo "Napaka pri brisanju: " . htmlspecialchars(mysqli_error($link));
+    echo "jbg";
 }
 
 $stmt->close();
