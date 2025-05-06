@@ -85,7 +85,7 @@ $pdf->Ln();
 
 if ($popust > 0) {
     $pdf->Cell(140, 10, "Popust ({$popust}%)", 1);
-    $pdf->Cell(30, 10, "-" . number_format($skupnaCena - $koncnaCena, 2) . " €", 1);
+    $pdf->Cell(30, 10, "-" . number_format($koncnaCena, 2) . " €", 1);
     $pdf->Ln();
 }
 
