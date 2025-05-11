@@ -128,7 +128,7 @@ if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
         $stmt->close();
     }
 
-    echo "IDK";
+    echo "IDK" . "--" - $popust . "--" .  $popustMult;
     exit();
     header("Location: " . $_SERVER['PHP_SELF']);
 }
