@@ -142,7 +142,7 @@ if (isset($_SESSION['racunId'])) {
 $izdan = 0;
 $popust = 0;
 if ($racunId >= 0) {
-    $sql = 'SELECT izdan, popust FROM racun WHERE id = ' . $racunId . ";";
+    $sql = 'SELECT izdan, popust FROM predracun WHERE id = ' . $racunId . ";";
     $result = $link->query($sql);
 
     if ($result && $row = $result->fetch_assoc()) {
