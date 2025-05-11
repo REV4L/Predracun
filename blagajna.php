@@ -17,7 +17,7 @@ if (isset($_GET["edit"])) {
 
 
 if (isset($_POST['izdaja']) && isset($_POST['shrani'])) {
-    //$racunId = $_SESSION['racunId'];
+    $racunId = $_SESSION['racunId'];
 
     $query = "SELECT a.cena, r.kolicina FROM artikli a 
               INNER JOIN artikel_predracun r ON a.id = r.artikel_id 
