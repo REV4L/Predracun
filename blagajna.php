@@ -266,7 +266,8 @@ echo "</div>";
                     '<button type="submit" name="uporabi_popust" class="btn akcija">Račun je že izdan</button>
                 <br>';
                 ?>
-                <a href="generiraj_pdf.php">PDF</a>
+                <br>
+                <a href="generiraj_pdf.php" class="btn akcija" style="display: inline-block; text-align: center; text-decoration: none;">PDF</a>
             </form>
 
             <?php
@@ -320,7 +321,7 @@ echo "</div>";
                 <h4>Ustvari nov račun</h4>
                 <label for="ime_kupca">Podatki o kupcu:</label>
                 <br>
-                <textarea name="ime_kupca" id="ime_kupca" rows="10" required><?php echo htmlspecialchars($imeKupca); ?></textarea>
+                <textarea name="ime_kupca" id="ime_kupca" rows="10" style="width: auto;" required><?php echo htmlspecialchars($imeKupca); ?></textarea>
                 <br><br>
 
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
@@ -329,7 +330,7 @@ echo "</div>";
                     <?php
                     if ($izdan < 1) {
                         echo '<button type="submit" name="shrani" class="btn akcija" style="filter: hue-rotate(120deg)">Shrani podatke</button>';
-                        echo '<button type="submit" name="izdaja" class="btn akcija" style="filter: hue-rotate(180deg)">Izdaj račun</button>';
+                        echo '<button type="submit" name="izdaja" class="btn akcija" style="filter: hue-rotate(230deg)">Izdaj račun</button>';
                     }
                     ?>
                 </div>
