@@ -28,8 +28,11 @@ body {
     width: 95%;
     margin: 0 auto;
     height: 85vh;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: #ffffff00;
+    border: 1px solid #cccccc00;
+
+    backdrop-filter: blur(120px);
+    -webkit-backdrop-filter: blur(120px);
 }
 
 .left-panel,
