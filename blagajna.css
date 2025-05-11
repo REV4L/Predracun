@@ -33,6 +33,8 @@ body {
     -webkit-backdrop-filter: blur(40px) hue-rotate(321deg) contrast(0.2) brightness(1.9);
 }
 
+
+
 .left-panel,
 .right-panel {
     padding: 15px;
