@@ -121,16 +121,16 @@ if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
         $popustMult = 1 - $popust / 100;
         $racunId = $_SESSION['racunId'];
 
-        $stmt = $link->prepare("UPDATE predracun SET koncna_cena = koncna_cena * ? , popust = ? WHERE id = ?");
+        $stmt = $link->prepare("UPDATE predracun SET koncna_cena = skupna_cena * ? , popust = ? WHERE id = ?");
         $stmt->bind_param("ddi", $skupnaCena, $popust, $racunId);
         $stmt->execute();
 
         $stmt->close();
     }
 
-    echo "IDK" . "--" - $popust . "--" .  $popustMult;
-    exit();
+    //echo "IDK" . "--" - $popust . "--" .  $popustMult;
     header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 
