@@ -321,7 +321,8 @@ echo "</div>";
                 <h4>Ustvari nov račun</h4>
                 <label for="ime_kupca">Podatki o kupcu:</label>
                 <br>
-                <textarea name="ime_kupca" id="ime_kupca" rows="10" style="width: auto;" required><?php echo htmlspecialchars($imeKupca); ?></textarea>
+                <textarea name="ime_kupca" id="ime_kupca" rows="10" style="width: 100%;" required><?php echo htmlspecialchars($imeKupca); ?></textarea>
+
                 <br><br>
 
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
