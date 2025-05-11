@@ -12,5 +12,3 @@ if ($link->connect_error) {
 }
 
 mysqli_set_charset($link, "utf8");
-
-?>

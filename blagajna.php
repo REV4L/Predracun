@@ -11,8 +11,23 @@ if (isset($_GET["edit"])) {
     $_SESSION['racunId'] = $_GET["edit"];
 }
 
-if (isset($_POST['izdaja'])) {
+$racunId = -1;
+if (isset($_SESSION['racunId'])) {
     $racunId = $_SESSION['racunId'];
+}
+
+$izdan = 0;
+if ($racunId >= 0) {
+    $sql = 'SELECT izdan FROM racun WHERE id = ' . $racunId . ";";
+    $result = $link->query($sql);
+
+    if ($result && $row = $result->fetch_assoc()) {
+        $izdan = $row['izdan'];
+    }
+}
+
+if (isset($_POST['izdaja']) && isset($_POST['shrani'])) {
+    //$racunId = $_SESSION['racunId'];
 
     $query = "SELECT a.cena, r.kolicina FROM artikli a 
               INNER JOIN artikel_predracun r ON a.id = r.artikel_id 
@@ -31,7 +46,9 @@ if (isset($_POST['izdaja'])) {
     $popust = isset($_POST['popust']) ? floatval($_POST['popust']) : 0;
     $koncnaCena = $skupnaCena - ($skupnaCena * $popust / 100);
 
-    $stmt = $link->prepare("UPDATE predracun SET izdan = 1, skupna_cena = ?, koncna_cena = ? WHERE id = ?");
+    $izdan = isset($_POST['izdaja']) ? 1 : 0;
+
+    $stmt = $link->prepare("UPDATE predracun SET izdan = $izdan, skupna_cena = ?, koncna_cena = ? WHERE id = ?");
     $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
     $stmt->execute();
     $stmt->close();
@@ -239,7 +256,12 @@ ini_set('display_errors', 1);
 
 
             <form action="#" method="POST">
-                <button type="submit" name="izdaja" class="izdaja">Izdaj račun</button>
+                <button type="submit" name="shrani" class="izdaja">Shrani račun</button>
+
+                <?php
+                if ($izdan < 1) '<button type="submit" name="izdaja" class="izdaja">Izdaj račun</button>';
+                else '<button name="izdaja" class="izdaja">Racun je ze izdan</button>';
+                ?>
             </form>
 
             <?php
