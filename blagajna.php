@@ -81,10 +81,10 @@ if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
 
     $_SESSION['racunId'] = $stmt->insert_id;
 
+    $stmt->close();
+
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
-
-    $stmt->close();
 }
 
 if (isset($_POST['dodaj_artikel'])) {
