@@ -7,23 +7,34 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'a') {
     exit();
 }
 
-if (!isset($_POST['artikel_id'])) {
+if (!isset($_GET['artikel_id'])) {
     die("Nepravilen dostop.");
 }
 
-$id = $_POST['artikel_id'];
+$id = intval($_GET['artikel_id']);
+$force = isset($_GET['force']) && $_GET['force'] == '1';
+
+if ($force) {
+    // Izbriši vse povezave iz artikel_predracun
+    $delStmt = $link->prepare("DELETE FROM artikel_predracun WHERE artikel_id = ?");
+    $delStmt->bind_param("i", $id);
+    $delStmt->execute();
+    $delStmt->close();
+}
 
 $stmt = $link->prepare("DELETE FROM artikli WHERE id = ?");
 $stmt->bind_param("i", $id);
 
 if ($stmt->execute()) {
-    header("Location: pregled_artiklov.php");
-    exit();
+    echo "<script>
+        alert('Brisanje uspešno.');
+        window.location.href = 'pregled_artiklov.php';
+    </script>";
 } else {
     echo "<script>
-    alert('Brisanje neuspešno, izdelek je vsebovan v računu.');
-    window.location.href = 'pregled_artiklov.php';
-</script>";
+        alert('Brisanje neuspešno, izdelek je vsebovan v računu.');
+        window.location.href = 'pregled_artiklov.php';
+    </script>";
 }
 
 $stmt->close();
