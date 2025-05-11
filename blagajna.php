@@ -256,11 +256,16 @@ ini_set('display_errors', 1);
 
 
             <form action="#" method="POST">
-                <button type="submit" name="shrani" class="izdaja">Shrani račun</button>
+
 
                 <?php
-                if ($izdan < 1) echo '<button type="submit" name="izdaja" class="izdaja">Izdaj račun</button>';
-                else echo '<button name="izdaja" class="izdaja">Racun je ze izdan</button>';
+
+
+                if ($izdan < 1) {
+                    echo '<button type="submit" name="shrani" class="izdaja">Shrani račun</button>';
+                    echo '<button type="submit" name="izdaja" class="izdaja">Izdaj račun</button>';
+                }
+                // else echo '<button name="izdaja" class="izdaja">Racun je ze izdan</button>';
                 ?>
             </form>
 
