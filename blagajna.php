@@ -84,6 +84,9 @@ if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
 
     $_SESSION['racunId'] = $stmt->insert_id;
 
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+
     $stmt->close();
 }
 
