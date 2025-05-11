@@ -2,6 +2,10 @@
 require_once 'baza.php';
 session_start();
 
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
     header("Location: prijava.php");
     exit();
@@ -11,20 +15,6 @@ if (isset($_GET["edit"])) {
     $_SESSION['racunId'] = $_GET["edit"];
 }
 
-$racunId = -1;
-if (isset($_SESSION['racunId'])) {
-    $racunId = $_SESSION['racunId'];
-}
-
-$izdan = 0;
-if ($racunId >= 0) {
-    $sql = 'SELECT izdan FROM racun WHERE id = ' . $racunId . ";";
-    $result = $link->query($sql);
-
-    if ($result && $row = $result->fetch_assoc()) {
-        $izdan = $row['izdan'];
-    }
-}
 
 if (isset($_POST['izdaja']) && isset($_POST['shrani'])) {
     //$racunId = $_SESSION['racunId'];
@@ -91,7 +81,9 @@ if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $stmt = $link->prepare($query);
     $stmt->bind_param("isss", $uporabnik_id, $novi_st, $ime_kupca, $priimek_kupca);
     $stmt->execute();
+
     $_SESSION['racunId'] = $stmt->insert_id;
+
     $stmt->close();
 }
 
@@ -122,8 +114,22 @@ if (isset($_POST['izbris_artikel'])) {
     $stmt->close();
 }
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
+$racunId = -1;
+if (isset($_SESSION['racunId'])) {
+    $racunId = $_SESSION['racunId'];
+}
+
+$izdan = 0;
+if ($racunId >= 0) {
+    $sql = 'SELECT izdan FROM racun WHERE id = ' . $racunId . ";";
+    $result = $link->query($sql);
+
+    if ($result && $row = $result->fetch_assoc()) {
+        $izdan = $row['izdan'];
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
