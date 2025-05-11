@@ -267,7 +267,7 @@ echo "</div>";
                 <br>';
                 ?>
                 <br>
-                <a href="generiraj_pdf.php" class="btn akcija" style="filter: hue-rotate(230deg); display: inline-block; text-align: center; text-decoration: none;">PDF</a>
+                <a href="generiraj_pdf.php" class="btn akcija" style="filter: hue-rotate(60deg); display: inline-block; text-align: center; text-decoration: none;">PDF</a>
             </form>
 
             <?php
