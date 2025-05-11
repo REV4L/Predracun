@@ -46,12 +46,6 @@ if (isset($_POST['izdaja']) && isset($_POST['shrani'])) {
 
 $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'a';
 
-echo "<div class='pozdrav'>Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'] . "<br>";
-echo "<a href='odjava.php'>Odjava</a> | <a href='pregled_predracunov_uporabnik.php'>Moji predračuni</a>";
-if ($isAdmin) {
-    echo " | <a href='admin.php'>Nazaj na admin meni</a>";
-}
-echo "</div>";
 
 if (isset($_POST['sub']) && $_POST['sub'] == 'novracun') {
     $uporabnik_id = $_SESSION['uporabnik_id'];
@@ -132,6 +126,14 @@ if ($racunId >= 0) {
         $izdan = $row['izdan'];
     }
 }
+
+
+echo "<div class='pozdrav'>Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'] . "<br>";
+echo "<a href='odjava.php'>Odjava</a> | <a href='pregled_predracunov_uporabnik.php'>Moji predračuni</a>";
+if ($isAdmin) {
+    echo " | <a href='admin.php'>Nazaj na admin meni</a>";
+}
+echo "</div>";
 
 ?>
 
