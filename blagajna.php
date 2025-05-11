@@ -268,7 +268,8 @@ echo "</div>";
             // }
             ?>
 
-            <div class="kategorije" style=<?php echo ($izdan < 1) ? "display: block;" : "display: none;"; ?>>
+            <div class="kategorije" style="<?php echo ($izdan < 1) ? 'display: block;' : 'display: none;'; ?>">
+
                 <h3>Kategorije</h3>
                 <form method="post">
                     <?php
