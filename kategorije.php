@@ -26,9 +26,23 @@ if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
     $stmt = $link->prepare("DELETE FROM kategorije WHERE id = ?");
     $stmt->bind_param("i", $id);
-    $stmt->execute();
+
+    if ($stmt->execute()) {
+        echo "<script>
+            alert('Kategorija uspešno izbrisana.');
+            window.location.href = 'kategorije.php';
+        </script>";
+    } else {
+        echo "<script>
+            alert('Kategorije ni mogoče izbrisati, ker je uporabljena v artiklih.');
+            window.location.href = 'kategorije.php';
+        </script>";
+    }
+
     $stmt->close();
+    exit();
 }
+
 
 // Urejanje kategorije
 $uredi_kategorijo = null;
