@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding-top: 60px;
     background: url('https://media.istockphoto.com/id/1203327078/vector/abstract-background-of-smooth-curves.jpg?s=612x612&w=0&k=20&c=ybD3C-N3ZUX9abrp4XHrpSRhwubH0DiZ1-ZuZLWTBnY=') no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     flex-direction: row;
 }
