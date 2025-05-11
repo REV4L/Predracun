@@ -42,7 +42,7 @@ if (isset($_POST['izdaja']) || isset($_POST['shrani'])) {
     $izdan = isset($_POST['izdaja']) ? 1 : 0;
 
     $stmt = $link->prepare("UPDATE predracun SET izdan = $izdan, skupna_cena = ?, koncna_cena = ? WHERE id = ?");
-    $stmt->bind_param("sddi", $skupnaCena, $koncnaCena, $racunId);
+    $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
     $stmt->execute();
     $stmt->close();
 
