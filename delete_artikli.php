@@ -20,10 +20,11 @@ if ($stmt->execute()) {
     header("Location: pregled_artiklov.php");
     exit();
 } else {
-    echo "Napaka pri brisanju: " . htmlspecialchars(mysqli_error($link));
-    echo "jbg";
+    echo "<script> alert(";
+    echo "Brisanje neuspešno, izdelek je vsebovan v računu.";
+    echo "); </script>";
+    header("Location: pregled_artiklov.php");
 }
 
 $stmt->close();
 $link->close();
-?>
