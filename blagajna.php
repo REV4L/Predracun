@@ -16,7 +16,7 @@ if (isset($_GET["edit"])) {
 }
 
 
-if (isset($_POST['izdaja']) && isset($_POST['shrani'])) {
+if (isset($_POST['izdaja']) || isset($_POST['shrani'])) {
     $racunId = $_SESSION['racunId'];
 
     $query = "SELECT a.cena, r.kolicina FROM artikli a 
@@ -42,9 +42,6 @@ if (isset($_POST['izdaja']) && isset($_POST['shrani'])) {
     $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
     $stmt->execute();
     $stmt->close();
-
-    echo "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    exit();
 }
 
 $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'a';
