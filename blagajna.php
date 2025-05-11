@@ -42,9 +42,17 @@ if (isset($_POST['izdaja']) || isset($_POST['shrani'])) {
     $izdan = isset($_POST['izdaja']) ? 1 : 0;
 
     $stmt = $link->prepare("UPDATE predracun SET izdan = $izdan, skupna_cena = ?, koncna_cena = ? WHERE id = ?");
-    $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
+    $stmt->bind_param("sddi", $skupnaCena, $koncnaCena, $racunId);
     $stmt->execute();
     $stmt->close();
+
+    if (isset($_POST['shrani'])) {
+        $podatkiKupca = $_POST['ime_kupca'] ?? '';
+        $stmt = $link->prepare("UPDATE predracun SET ime_kupca = ? WHERE id = ?");
+        $stmt->bind_param("si", $podatkiKupca, $racunId);
+        $stmt->execute();
+        $stmt->close();
+    }
 
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
@@ -310,28 +318,23 @@ echo "</div>";
             ?>
             <form method="POST">
                 <h4>Ustvari nov račun</h4>
-                <label for="ime_kupca">Ime kupca</label>
+                <label for="ime_kupca">Podatki o kupcu:</label>
                 <br>
                 <textarea name="ime_kupca" id="ime_kupca" rows="10" required><?php echo htmlspecialchars($imeKupca); ?></textarea>
-                <br>
-                <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
+                <br><br>
+
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
+
+                    <?php
+                    if ($izdan < 1) {
+                        echo '<button type="submit" name="shrani" class="btn akcija" style="filter: hue-rotate(120deg)">Shrani podatke</button>';
+                        echo '<button type="submit" name="izdaja" class="btn akcija" style="filter: hue-rotate(180deg)">Izdaj račun</button>';
+                    }
+                    ?>
+                </div>
             </form>
 
-
-
-            <form action="#" method="POST">
-
-
-                <?php
-
-
-                if ($izdan < 1) {
-                    echo '<button type="submit" name="shrani" class="btn akcija" style="filter: hue-rotate(120deg)">Shrani račun</button>';
-                    echo '<br><button type="submit" name="izdaja" class="btn akcija"style="filter: hue-rotate(180deg)">Izdaj račun</button>';
-                }
-                // else echo '<button name="izdaja" class="izdaja">Racun je ze izdan</button>';
-                ?>
-            </form>
 
             <?php
             if (isset($_POST['kategorija_id'])) {
