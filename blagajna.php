@@ -122,7 +122,7 @@ if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
         $racunId = $_SESSION['racunId'];
 
         $stmt = $link->prepare("UPDATE predracun SET koncna_cena = skupna_cena * ? , popust = ? WHERE id = ?");
-        $stmt->bind_param("ddi", $skupnaCena, $popust, $racunId);
+        $stmt->bind_param("ddi", $popustMult, $popust, $racunId);
         $stmt->execute();
 
         $stmt->close();
