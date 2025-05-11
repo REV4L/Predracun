@@ -151,6 +151,8 @@ if ($racunId >= 0) {
     }
 }
 
+echo $popust;
+
 
 
 
