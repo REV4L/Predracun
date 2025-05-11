@@ -65,23 +65,27 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
             echo "<td>" . htmlspecialchars($row['opis']) . "</td>";
             echo "<td>" . htmlspecialchars($row['kategorija_ime']) . "</td>";
             echo "<td>
-            <form action='delete_artikli.php' method='POST' style='display:inline;'>
-                <input type='hidden' name='artikel_id' value='" . $row['id'] . "'>
-                <button type='submit'>Izbriši</button>
-            </form>
-            <a href='delete_artikli.php?artikel_id=" . $row['id'] . "&force=1' 
-               onclick=\"return confirm('Res želite trajno izbrisati artikel, tudi če je že uporabljen?');\" 
-               style='margin-left: 10px; color: red; text-decoration: underline;'>
-               Force Delete
-            </a>
-            <form action='update_artikli.php' method='GET' style='display:inline; margin-left: 10px;'>
-                <input type='hidden' name='id' value='" . $row['id'] . "'>
-                <button type='submit'>Posodobi</button>
-            </form>
-          </td>";
+        <a href='delete_artikli.php?artikel_id=" . $row['id'] . "'
+           onclick=\"return confirm('Ste prepričani, da želite izbrisati ta artikel?');\"
+           style='color: #cc0000; text-decoration: underline; margin-right: 10px;'>
+           Izbriši
+        </a>
+        
+        <a href='delete_artikli.php?artikel_id=" . $row['id'] . "&force=1'
+           onclick=\"return confirm('Res želite trajno izbrisati artikel, tudi če je že uporabljen?');\"
+           style='color: red; font-weight: bold; margin-right: 10px; text-decoration: underline;'>
+           Force Delete
+        </a>
+
+        <a href='update_artikli.php?id=" . $row['id'] . "'
+           style='color: #0077cc; text-decoration: underline;'>
+           Posodobi
+        </a>
+      </td>";
             echo "</tr>";
         }
         echo "</table>";
+
 
 
         $stmt->close();
