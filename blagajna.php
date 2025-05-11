@@ -13,6 +13,9 @@ if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
 
 if (isset($_GET["edit"])) {
     $_SESSION['racunId'] = $_GET["edit"];
+
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 
@@ -95,6 +98,9 @@ if (isset($_POST['dodaj_artikel'])) {
     $stmt->bind_param("iii", $artikel_id, $kolicina, $predracun_id);
     $stmt->execute();
     $stmt->close();
+
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 if (isset($_POST['posodobi_kolicino'])) {
@@ -104,6 +110,9 @@ if (isset($_POST['posodobi_kolicino'])) {
     $stmt->bind_param("ii", $nova_kolicina, $artikel_predracun_id);
     $stmt->execute();
     $stmt->close();
+
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 if (isset($_POST['izbris_artikel'])) {
@@ -112,6 +121,9 @@ if (isset($_POST['izbris_artikel'])) {
     $stmt->bind_param("i", $artikel_predracun_id);
     $stmt->execute();
     $stmt->close();
+
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
