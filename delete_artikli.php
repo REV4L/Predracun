@@ -20,11 +20,10 @@ if ($stmt->execute()) {
     header("Location: pregled_artiklov.php");
     exit();
 } else {
-    echo "<script> alert(";
-    echo "Brisanje neuspešno, izdelek je vsebovan v računu.";
-    echo "); </script>";
-    header("Location: pregled_artiklov.php");
+    echo "<script>
+    alert('Brisanje neuspešno, izdelek je vsebovan v računu.');
+    window.location.href = 'pregled_artiklov.php';
+</script>";
 }
 
 $stmt->close();
-$link->close();
