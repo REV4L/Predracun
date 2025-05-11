@@ -149,6 +149,8 @@ if ($racunId >= 0) {
         $izdan = $row['izdan'];
         $popust = $row['popust'];
     }
+
+    echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 }
 
 echo $popust;
