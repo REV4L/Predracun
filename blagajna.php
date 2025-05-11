@@ -42,6 +42,9 @@ if (isset($_POST['izdaja']) || isset($_POST['shrani'])) {
     $stmt->bind_param("ddi", $skupnaCena, $koncnaCena, $racunId);
     $stmt->execute();
     $stmt->close();
+
+    echo "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    exit();
 }
 
 $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'a';
