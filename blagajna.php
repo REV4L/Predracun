@@ -148,10 +148,7 @@ if ($racunId >= 0) {
     if ($result && $row = $result->fetch_assoc()) {
         $izdan = $row['izdan'];
         $popust = $row['popust'];
-        echo "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY";
     }
-
-    echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 }
 
 echo $popust;
@@ -233,7 +230,10 @@ echo "</div>";
             </table>
             <h4>Skupni znesek: <span id="skupni-znesek"><?php echo number_format($skupnaCena, 2); ?></span> €</h4>
 
-            <h4>S popustom: <span id="skupni-znesek"><?php echo number_format($skupnaCena * (1 - $popust / 100), 2); ?></span> €</h4>
+            <?php
+            if ($popust > 0)
+                echo '<h4>S popustom: <span id="skupni-znesek">' . number_format($skupnaCena * (1 - $popust / 100), 2) . '</span> €</h4>';
+            ?>
 
             <form method="POST" class="popust-form">
                 <label for="popust">Vnesite popust (%):</label>
