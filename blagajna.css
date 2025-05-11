@@ -3,10 +3,12 @@ body {
     margin: 0;
     padding-top: 60px;
     background: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/f55b3948462387.560830d2eb460.jpg') no-repeat center center fixed;
-    background-size: cover;
     display: flex;
     flex-direction: row;
 }
+
+
+
 
 .pozdrav {
     position: fixed;
@@ -26,7 +28,7 @@ body {
     width: 95%;
     margin: 0 auto;
     height: 85vh;
-    background-color: transparent;
+    background-color: #fff;
     border: 1px solid #ccc;
 }
 
@@ -34,12 +36,6 @@ body {
 .right-panel {
     padding: 15px;
     overflow-y: auto;
-    background-color: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    /* Safari support */
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .left-panel {
@@ -107,9 +103,6 @@ table td {
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
 }
 
 .btn.akcija.izdaj {
