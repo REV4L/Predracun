@@ -327,7 +327,7 @@ echo "</div>";
 
                 if ($izdan < 1) {
                     echo '<button type="submit" name="shrani" class="btn akcija" style="filter: hue-rotate(120deg)">Shrani račun</button>';
-                    <br>
+                    echo '<br>';
                     echo '<button type="submit" name="izdaja" class="btn akcija"style="filter: hue-rotate(180deg)>"Izdaj račun</button>';
                 }
                 // else echo '<button name="izdaja" class="izdaja">Racun je ze izdan</button>';
