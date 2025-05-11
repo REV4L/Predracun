@@ -355,7 +355,7 @@ echo "</div>";
                     echo "<td>
                             <form method='post'>
                                 <input type='hidden' name='artikel_id' value='{$row['id']}'>
-                                <button type='submit' name='dodaj_artikel'>Dodaj</button>
+                                <button type='submit' name='dodaj_artikel' class='btn akcija'>+</button>
                             </form>
                           </td>";
                     echo "</tr>";
