@@ -114,6 +114,20 @@ if (isset($_POST['izbris_artikel'])) {
     $stmt->close();
 }
 
+if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
+    $popust = floatval($_POST['popust']);
+    if ($popust > 0 && $popust <= 100) {
+        //$novaCena = $skupnaCena - ($skupnaCena * $popust / 100);
+        $popustMult = 1 - $popust / 100;
+        $racunId = $_SESSION['racunId'];
+
+        $stmt = $link->prepare("UPDATE predracun SET koncna_cena = koncna_cena * ? WHERE id = ?");
+        $stmt->bind_param("di", $skupnaCena, $racunId);
+        $stmt->execute();
+        $stmt->close();
+    }
+}
+
 
 $racunId = -1;
 if (isset($_SESSION['racunId'])) {
@@ -121,14 +135,18 @@ if (isset($_SESSION['racunId'])) {
 }
 
 $izdan = 0;
+$popust = 0;
 if ($racunId >= 0) {
-    $sql = 'SELECT izdan FROM racun WHERE id = ' . $racunId . ";";
+    $sql = 'SELECT izdan, popust FROM racun WHERE id = ' . $racunId . ";";
     $result = $link->query($sql);
 
     if ($result && $row = $result->fetch_assoc()) {
         $izdan = $row['izdan'];
+        $popust = $row['popust'];
     }
 }
+
+
 
 
 echo "<div class='pozdrav'>Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'] . "<br>";
@@ -205,6 +223,8 @@ echo "</div>";
             </table>
             <h4>Skupni znesek: <span id="skupni-znesek"><?php echo number_format($skupnaCena, 2); ?></span> €</h4>
 
+            <h4>S popustom: <span id="skupni-znesek"><?php echo number_format($skupnaCena * (1 - $popust / 100), 2); ?></span> €</h4>
+
             <form method="POST" class="popust-form">
                 <label for="popust">Vnesite popust (%):</label>
                 <input type="number" name="popust" id="popust" min="0" max="100" step="0.01">
@@ -214,22 +234,22 @@ echo "</div>";
             </form>
 
             <?php
-            if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
-                $popust = floatval($_POST['popust']);
-                if ($popust > 0 && $popust <= 100) {
-                    $novaCena = $skupnaCena - ($skupnaCena * $popust / 100);
-                    echo "<h4>Popust: {$popust}%</h4>";
-                    echo "<h4>Nova cena po popustu: " . number_format($novaCena, 2) . " €</h4>";
+            // if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
+            //     $popust = floatval($_POST['popust']);
+            //     if ($popust > 0 && $popust <= 100) {
+            //         $novaCena = $skupnaCena - ($skupnaCena * $popust / 100);
+            //         echo "<h4>Popust: {$popust}%</h4>";
+            //         echo "<h4>Nova cena po popustu: " . number_format($novaCena, 2) . " €</h4>";
 
-                    $racunId = $_SESSION['racunId'];
-                    $stmt = $link->prepare("UPDATE predracun SET skupna_cena = ? WHERE id = ?");
-                    $stmt->bind_param("id", $skupnaCena, $racunId);
-                    $stmt = $link->prepare("UPDATE predracun SET koncna_cena = ? WHERE id = ?");
-                    $stmt->bind_param("di", $novaCena, $racunId);
-                    $stmt->execute();
-                    $stmt->close();
-                }
-            }
+            //         $racunId = $_SESSION['racunId'];
+            //         $stmt = $link->prepare("UPDATE predracun SET skupna_cena = ? WHERE id = ?");
+            //         $stmt->bind_param("id", $skupnaCena, $racunId);
+            //         $stmt = $link->prepare("UPDATE predracun SET koncna_cena = ? WHERE id = ?");
+            //         $stmt->bind_param("di", $novaCena, $racunId);
+            //         $stmt->execute();
+            //         $stmt->close();
+            //     }
+            // }
             ?>
 
             <div class="kategorije">
