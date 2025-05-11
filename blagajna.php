@@ -310,12 +310,12 @@ echo "</div>";
             ?>
             <form method="POST">
                 <h4>Ustvari nov račun</h4>
-                <input type="text" name="ime_kupca" placeholder="Ime kupca"
-                    value="<?php echo htmlspecialchars($imeKupca); ?>" required>
-                <input type="text" name="priimek_kupca" placeholder="Priimek kupca"
-                    value="<?php echo htmlspecialchars($priimekKupca); ?>" required>
+                <label for="ime_kupca">Ime kupca</label>
+                <textarea name="ime_kupca" id="ime_kupca" rows="10" required><?php echo htmlspecialchars($imeKupca); ?></textarea>
+
                 <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
             </form>
+
 
 
             <form action="#" method="POST">
