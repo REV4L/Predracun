@@ -28,7 +28,7 @@ body {
     flex-direction: row;
     width: 95%;
     margin: 0 auto;
-    height: 100vh;
+    height: auto;
     background-color: #ffffff00;
     border: 1px solid #cccccc00;
 
