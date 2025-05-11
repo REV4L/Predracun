@@ -128,8 +128,9 @@ if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
         $stmt->close();
     }
 
-    header("Location: " . $_SERVER['PHP_SELF']);
+    echo "IDK";
     exit();
+    header("Location: " . $_SERVER['PHP_SELF']);
 }
 
 
@@ -231,7 +232,7 @@ echo "</div>";
 
             <form method="POST" class="popust-form">
                 <label for="popust">Vnesite popust (%):</label>
-                <input type="number" name="popust" id="popust" min="0" max="100" step="0.01">
+                <input type="number" name="popust" id="popust" min="0" max="100" step="0.001">
                 <button type="submit" name="uporabi_popust" class="btn akcija">Uporabi popust</button>
                 <br>
                 <a href="generiraj_pdf.php">PDF</a>
