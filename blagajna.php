@@ -127,6 +127,9 @@ if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
 
         $stmt->close();
     }
+
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 
