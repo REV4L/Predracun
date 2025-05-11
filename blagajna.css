@@ -28,12 +28,12 @@ body {
     flex-direction: row;
     width: 95%;
     margin: 0 auto;
-    height: 85vh;
+    height: 100vh;
     background-color: #ffffff00;
     border: 1px solid #cccccc00;
 
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px) hue-rotate(321deg) contrast(0.2) brightness(1.9);
+    -webkit-backdrop-filter: blur(40px) hue-rotate(321deg) contrast(0.2) brightness(1.9);
 }
 
 .left-panel,
