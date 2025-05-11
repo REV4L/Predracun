@@ -65,11 +65,11 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
             echo "<td>" . htmlspecialchars($row['opis']) . "</td>";
             echo "<td>" . htmlspecialchars($row['kategorija_ime']) . "</td>";
             echo "<td>
-            <form action='izbrisi_artikel.php' method='POST' style='display:inline;'>
+            <form action='delete_artikli.php' method='POST' style='display:inline;'>
                 <input type='hidden' name='artikel_id' value='" . $row['id'] . "'>
                 <button type='submit'>Izbriši</button>
             </form>
-            <a href='izbrisi_artikel.php?artikel_id=" . $row['id'] . "&force=1' 
+            <a href='delete_artikli.php?artikel_id=" . $row['id'] . "&force=1' 
                onclick=\"return confirm('Res želite trajno izbrisati artikel, tudi če je že uporabljen?');\" 
                style='margin-left: 10px; color: red; text-decoration: underline;'>
                Force Delete
