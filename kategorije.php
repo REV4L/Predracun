@@ -64,6 +64,10 @@ if (isset($_POST['shrani'])) {
     $stmt->bind_param("ssi", $ime, $opis, $id);
     $stmt->execute();
     $stmt->close();
+
+    echo "<script>
+            window.location.href = 'kategorije.php';
+        </script>";
 }
 ?>
 
