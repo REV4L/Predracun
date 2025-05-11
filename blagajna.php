@@ -311,8 +311,9 @@ echo "</div>";
             <form method="POST">
                 <h4>Ustvari nov račun</h4>
                 <label for="ime_kupca">Ime kupca</label>
+                <br>
                 <textarea name="ime_kupca" id="ime_kupca" rows="10" required><?php echo htmlspecialchars($imeKupca); ?></textarea>
-
+                <br>
                 <button type="submit" name="sub" value="novracun" class="btn akcija">Nov račun</button>
             </form>
 
@@ -325,8 +326,8 @@ echo "</div>";
 
 
                 if ($izdan < 1) {
-                    echo '<button type="submit" name="shrani" class="izdaja">Shrani račun</button>';
-                    echo '<button type="submit" name="izdaja" class="izdaja">Izdaj račun</button>';
+                    echo '<button type="submit" name="shrani" class="btn akcija" style="filter: hue-rotate(120deg)">Shrani račun</button>';
+                    echo '<button type="submit" name="izdaja" class="btn akcija">style="filter: hue-rotate(180deg)"Izdaj račun</button>';
                 }
                 // else echo '<button name="izdaja" class="izdaja">Racun je ze izdan</button>';
                 ?>
