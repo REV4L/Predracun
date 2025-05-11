@@ -234,10 +234,18 @@ echo "</div>";
             ?>
 
             <form method="POST" class="popust-form">
-                <label for="popust">Vnesite popust (%):</label>
+                <?php
+                if ($izdan < 1)
+                    echo
+                    '<label for="popust">Vnesite popust (%):</label>
                 <input type="number" name="popust" id="popust" min="0" max="100" step="0.001">
                 <button type="submit" name="uporabi_popust" class="btn akcija">Uporabi popust</button>
-                <br>
+                <br>';
+                else
+                    echo
+                    '<button type="submit" name="uporabi_popust" class="btn akcija">Račun je že izdan</button>
+                <br>';
+                ?>
                 <a href="generiraj_pdf.php">PDF</a>
             </form>
 
