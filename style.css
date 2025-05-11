@@ -1,0 +1,18 @@
+.btn.akcija {
+    padding: 12px;
+    font-size: 16px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn.akcija.izdaj {
+    background-color: #cc0000;
+}
+
+.btn.akcija:hover {
+    opacity: 0.85;
+}

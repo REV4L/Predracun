@@ -16,7 +16,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     <meta charset="UTF-8">
     <title>Izpis artiklov</title>
     <link rel="stylesheet" href="izpis.css">
-    <link rel="stylesheet" href="blagajna.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
