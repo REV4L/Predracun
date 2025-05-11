@@ -148,6 +148,7 @@ if ($racunId >= 0) {
     if ($result && $row = $result->fetch_assoc()) {
         $izdan = $row['izdan'];
         $popust = $row['popust'];
+        echo "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY";
     }
 
     echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXX";
