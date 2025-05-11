@@ -116,7 +116,7 @@ if (isset($_POST['izbris_artikel'])) {
 
 if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
     $popust = floatval($_POST['popust']);
-    if ($popust > 0 && $popust <= 100) {
+    if ($popust >= 0 && $popust <= 100) {
         //$novaCena = $skupnaCena - ($skupnaCena * $popust / 100);
         $popustMult = 1 - $popust / 100;
         $racunId = $_SESSION['racunId'];
