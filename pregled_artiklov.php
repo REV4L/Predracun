@@ -16,6 +16,7 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
     <meta charset="UTF-8">
     <title>Izpis artiklov</title>
     <link rel="stylesheet" href="izpis.css">
+    <link rel="stylesheet" href="blagajna.css">
 </head>
 
 <body>
@@ -64,27 +65,33 @@ echo "Prijavljeni ste kot " . $_SESSION['ime'] . " " . $_SESSION['priimek'];
             echo "<td>" . htmlspecialchars($row['kolicina']) . "</td>";
             echo "<td>" . htmlspecialchars($row['opis']) . "</td>";
             echo "<td>" . htmlspecialchars($row['kategorija_ime']) . "</td>";
-            echo "<td>
-        <a href='delete_artikli.php?artikel_id=" . $row['id'] . "'
-           onclick=\"return confirm('Ste prepričani, da želite izbrisati ta artikel?');\"
-           style='color: #cc0000; text-decoration: underline; margin-right: 10px;'>
-           Izbriši
-        </a>
-        
-        <a href='delete_artikli.php?artikel_id=" . $row['id'] . "&force=1'
-           onclick=\"return confirm('Res želite trajno izbrisati artikel, tudi če je že uporabljen?');\"
-           style='color: red; font-weight: bold; margin-right: 10px; text-decoration: underline;'>
-           Force Delete
-        </a>
+            echo "<td style='display: flex; flex-wrap: wrap; gap: 8px;'>";
 
-        <a href='update_artikli.php?id=" . $row['id'] . "'
-           style='color: #0077cc; text-decoration: underline;'>
-           Posodobi
-        </a>
-      </td>";
+            // Navaden izbris
+            echo "<a href='delete_artikli.php?artikel_id=" . $row['id'] . "'
+             onclick=\"return confirm('Ste prepričani, da želite izbrisati ta artikel?');\"
+             class='btn akcija'>
+             Izbriši
+          </a>";
+
+            // Force delete
+            echo "<a href='delete_artikli.php?artikel_id=" . $row['id'] . "&force=1'
+             onclick=\"return confirm('Res želite trajno izbrisati artikel, tudi če je že uporabljen?');\"
+             class='btn akcija' style='background-color: #cc0000;'>
+             Force Delete
+          </a>";
+
+            // Posodobi
+            echo "<a href='update_artikli.php?id=" . $row['id'] . "'
+             class='btn akcija' style='background-color: #f39c12;'>
+             Posodobi
+          </a>";
+
+            echo "</td>";
             echo "</tr>";
         }
         echo "</table>";
+
 
 
 
