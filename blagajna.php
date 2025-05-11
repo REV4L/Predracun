@@ -43,7 +43,7 @@ if (isset($_POST['izdaja']) || isset($_POST['shrani'])) {
     $stmt->execute();
     $stmt->close();
 
-    echo "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
 
