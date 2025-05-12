@@ -52,7 +52,7 @@ $pdf->SetFont('DejaVu', '', 12);
 $pdf->Cell(0, 10, "Predračun št.: " . $stevilka, 0, 1);
 $pdf->Cell(0, 10, "Datum: " . $datum, 0, 1);
 $pdf->Cell(0, 10, "Prodajalec: " . $ime . " " . $priimek, 0, 1);
-$pdf->Cell(0, 10, "Kupec: " . $kup_ime . " " . $kup_priimek, 0, 1);
+$pdf->MultiCell(0, 10, "Kupec: " . $kup_ime . " " . $kup_priimek, 0, 1);
 $pdf->Ln(5);
 
 // Tabela artiklov
