@@ -6,11 +6,6 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$racunId = -1;
-if (isset($_SESSION['racunId'])) {
-    $racunId = $_SESSION['racunId'];
-}
-
 $izdan = 0;
 $popust = 0;
 if ($racunId >= 0) {
@@ -22,6 +17,41 @@ if ($racunId >= 0) {
         $popust = $row['popust'];
     }
 }
+function shraniCeno($racunId1, $koncnaCena1, $skupnaCena1)
+{
+    global $link;
+    global $popust;
+
+    // $racunId = $_SESSION['racunId'];
+
+    // $query = "SELECT a.cena, r.kolicina FROM artikli a 
+    //           INNER JOIN artikel_predracun r ON a.id = r.artikel_id 
+    //           WHERE r.predracun_id = ?";
+    // $stmt = $link->prepare($query);
+    // $stmt->bind_param("i", $racunId);
+    // $stmt->execute();
+    // $result = $stmt->get_result();
+
+    //$skupnaCena = 0;
+    //while ($row = $result->fetch_assoc()) {
+    //    $skupnaCena += $row['cena'] * $row['kolicina'];
+    //}
+    // $stmt->close();
+
+    //$popust = isset($_POST['popust']) ? floatval($_POST['popust']) : $popust;
+    //$koncnaCena = $skupnaCena - ($skupnaCena * $popust / 100);
+
+    $stmt = $link->prepare("UPDATE predracun SET skupna_cena = ?, koncna_cena = ? WHERE id = ?");
+    $stmt->bind_param("ddi", $skupnaCena1, $koncnaCena1, $racunId1);
+    $stmt->execute();
+    $stmt->close();
+}
+
+$racunId = -1;
+if (isset($_SESSION['racunId'])) {
+    $racunId = $_SESSION['racunId'];
+}
+
 
 
 if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
@@ -250,8 +280,10 @@ echo "</div>";
             <h4>Skupni znesek: <span id="skupni-znesek"><?php echo number_format($skupnaCena, 2); ?></span> €</h4>
 
             <?php
-            if ($popust > 0)
+            if ($popust > 0) {
                 echo '<h4>S popustom: <span id="skupni-znesek">' . number_format($skupnaCena * (1 - $popust / 100), 2) . '</span> €</h4>';
+                shraniCeno($racunId, $skupnaCena * (1 - $popust / 100), $skupnaCena);
+            }
             ?>
 
             <form method="POST" class="popust-form">
