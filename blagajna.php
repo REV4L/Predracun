@@ -6,6 +6,24 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+$racunId = -1;
+if (isset($_SESSION['racunId'])) {
+    $racunId = $_SESSION['racunId'];
+}
+
+$izdan = 0;
+$popust = 0;
+if ($racunId >= 0) {
+    $sql = 'SELECT izdan, popust FROM predracun WHERE id = ' . $racunId . ";";
+    $result = $link->query($sql);
+
+    if ($result && $row = $result->fetch_assoc()) {
+        $izdan = $row['izdan'];
+        $popust = $row['popust'];
+    }
+}
+
+
 if (!isset($_SESSION['ime']) || !isset($_SESSION['priimek'])) {
     header("Location: prijava.php");
     exit();
@@ -36,7 +54,7 @@ if (isset($_POST['izdaja']) || isset($_POST['shrani'])) {
     }
     $stmt->close();
 
-    $popust = isset($_POST['popust']) ? floatval($_POST['popust']) : 0;
+    $popust = isset($_POST['popust']) ? floatval($_POST['popust']) : $popust;
     $koncnaCena = $skupnaCena - ($skupnaCena * $popust / 100);
 
     $izdan = isset($_POST['izdaja']) ? 1 : 0;
@@ -153,23 +171,6 @@ if (isset($_POST['uporabi_popust']) && isset($_POST['popust'])) {
     exit();
 }
 
-
-$racunId = -1;
-if (isset($_SESSION['racunId'])) {
-    $racunId = $_SESSION['racunId'];
-}
-
-$izdan = 0;
-$popust = 0;
-if ($racunId >= 0) {
-    $sql = 'SELECT izdan, popust FROM predracun WHERE id = ' . $racunId . ";";
-    $result = $link->query($sql);
-
-    if ($result && $row = $result->fetch_assoc()) {
-        $izdan = $row['izdan'];
-        $popust = $row['popust'];
-    }
-}
 
 
 
