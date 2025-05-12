@@ -6,6 +6,10 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+$racunId = -1;
+if (isset($_SESSION['racunId'])) {
+    $racunId = $_SESSION['racunId'];
+}
 $izdan = 0;
 $popust = 0;
 if ($racunId >= 0) {
@@ -47,10 +51,6 @@ function shraniCeno($racunId1, $koncnaCena1, $skupnaCena1)
     $stmt->close();
 }
 
-$racunId = -1;
-if (isset($_SESSION['racunId'])) {
-    $racunId = $_SESSION['racunId'];
-}
 
 
 
